@@ -1,0 +1,18 @@
+.Display {
+  background-color: #333;
+  color: #fff;
+  font-family: monospace;
+}
+
+.Display__line {
+  display: flex;
+  flex-flow: row nowrap;
+}
+
+.Display__character {
+  width: 13px;
+  height: 20px;
+  text-align: center;
+  line-height: 20px;
+  font-size: 16px;
+}
