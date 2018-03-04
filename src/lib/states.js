@@ -1,6 +1,6 @@
-import { moveEntity } from './actions';
+import { moveEntity, dismissTextarea } from './actions';
 
-export const FieldState = (game, event) => {
+export const FieldState = game => event => {
   const player = game.getPlayer();
   let handled = true;
 
@@ -23,3 +23,35 @@ export const FieldState = (game, event) => {
 
   return handled;
 };
+
+FieldState.controls = [
+  {
+    key: 'Arrows',
+    action: 'Move',
+  },
+];
+
+export const TextBoxState = (game, textarea) => {
+  game.setTextarea(textarea);
+
+  return event => {
+    let handled = true;
+
+    switch (event.key) {
+      case ' ':
+        game.runAction(dismissTextarea);
+        break;
+      default:
+        handled = false;
+    }
+
+    return handled;
+  };
+}
+
+TextBoxState.controls = [
+  {
+    key: 'Space',
+    action: 'Continue',
+  },
+];

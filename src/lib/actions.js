@@ -1,6 +1,7 @@
 import { Location, Playable, Encounterable, Feline, Solid } from './components';
 import { getDirectionalCoords } from './utils';
 import { PLAYER_MOVED } from './events';
+import { TextBoxState } from './states';
 
 // Move an entity one square in a direction
 export function moveEntity(game, entity, direction) {
@@ -51,8 +52,13 @@ export function beginEncounter(game, encounter) {
     const { gender, breed } = encounter.feline;
     const a = breed[0] === 'A' ? 'an' : 'a';
 
-    game.setTextarea({
+    game.pushState(TextBoxState, {
       text: `You encounter ${name}, ${a} ${breed}. ${pronouns[gender]} fur looks soft and beautiful.`,
     });
   }
+}
+
+export function dismissTextarea(game) {
+  game.popTextarea();
+  game.popState();
 }

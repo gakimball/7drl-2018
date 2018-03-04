@@ -9,6 +9,7 @@ import Encounter from './encounter';
 import Map from './map';
 import Stats from './stats';
 import Textarea from './textarea';
+import Controls from './controls';
 import './app.css';
 
 class App extends Component {
@@ -73,7 +74,7 @@ class App extends Component {
 
     return (
       <div className="App">
-        <Container width={80} height={30}>
+        <Container width={80} height={33}>
           <Player key="player" walking={playerWalking} />
           {encounter && <Encounter key="cat" image={encounter.image} />}
           <Display
@@ -115,6 +116,15 @@ class App extends Component {
               characters={characters}
             />
           )}</Textarea>
+          <Controls controls={this.game.getControls()}>{characters => (
+            <Display
+              border={false}
+              y={30}
+              width={80}
+              height={3}
+              characters={characters}
+            />
+          )}</Controls>
         </Container>
       </div>
     );

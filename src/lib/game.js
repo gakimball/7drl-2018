@@ -13,9 +13,7 @@ export default class Game {
     this.onTick = onTick;
     this.eventLog = [];
     this.textarea = [];
-    this.states = [
-      FieldState,
-    ];
+    this.states = [];
 
     document.addEventListener('keydown', this.handleKey);
   }
@@ -32,12 +30,16 @@ export default class Game {
     });
   }
 
-  popTextarea() {
-    this.textArea.shift();
+  getControls() {
+    return this.getActiveState().controls;
   }
 
-  pushState(state) {
-    this.states.unshift(state);
+  popTextarea() {
+    this.textarea.shift();
+  }
+
+  pushState(state, ...args) {
+    this.states.unshift(state(this, ...args));
   }
 
   popState() {
@@ -45,6 +47,8 @@ export default class Game {
   }
 
   start() {
+    this.pushState(FieldState);
+
     // Create walls
     this.level.forEach((row, y) => row.forEach((col, x) => {
       if (col) {
@@ -74,8 +78,12 @@ export default class Game {
     this.tick();
   }
 
+  getActiveState() {
+    return this.states[0];
+  }
+
   handleKey = event => {
-    const handled = this.states[0](this, event);
+    const handled = this.getActiveState()(event);
 
     if (handled) {
       event.preventDefault();
