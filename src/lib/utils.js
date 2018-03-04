@@ -4,11 +4,9 @@ import arrayShuffle from 'array-shuffle';
 import { responseTypes, catResponses } from './constants';
 import questions from './questions';
 
-export function createMaze() {
-  const levelWidth = 50;
-  const levelHeight = 50;
-  const maze = new rot.Map.EllerMaze(levelWidth, levelHeight);
-  const map = createEmptyArray(levelWidth, levelHeight, false);
+export function createMaze(width, height) {
+  const maze = new rot.Map.EllerMaze(width, height);
+  const map = createEmptyArray(width, height, false);
 
   maze.create((x, y, cell) => {
     map[y][x] = cell === 1;

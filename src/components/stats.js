@@ -22,7 +22,7 @@ export default class Stats extends Component {
       `Kindness: ${player.playable.kindness}`,
       `Humor: ${player.playable.humor}`,
       `Seriousness: ${player.playable.seriousness}`,
-      `Uncertainty: ${player.playable.uncertainty}`,
+      `Weirdness: ${player.playable.weirdness}`,
       '',
       ...classes
         .map(cls => {

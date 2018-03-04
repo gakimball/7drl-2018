@@ -8,8 +8,10 @@ import { catResponses, statGains, statLosses, statNames } from './constants';
 
 export function createLevel(game) {
   game.pushState(FieldState);
+  const width = 50;
+  const height = 50;
 
-  const level = createMaze();
+  const level = createMaze(width, height);
 
   // Create walls
   level.forEach((row, y) => row.forEach((col, x) => {
@@ -21,8 +23,8 @@ export function createLevel(game) {
   }));
 
   const createAtRandom = (entity) => {
-    const x = randomInt(14);
-    const y = randomInt(9);
+    const x = randomInt(width - 1);
+    const y = randomInt(height - 1);
 
     if (game.getEntitiesAtLocation(x, y).length > 0) {
       createAtRandom(entity);
@@ -37,7 +39,7 @@ export function createLevel(game) {
   createAtRandom(Player);
 
   // Create cats
-  for (let i = 0; i < 10; i++) {
+  for (let i = 0; i < 20; i++) {
     createAtRandom(randomCat());
   }
 }

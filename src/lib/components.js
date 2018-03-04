@@ -14,7 +14,7 @@ export function Living() {}
 
 export function Playable() {
   this.life = 5;
-  this.uncertainty = 0;
+  this.weirdness = 0;
   this.kindness = 0;
   this.humor = 0;
   this.seriousness = 0;

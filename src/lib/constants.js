@@ -104,7 +104,7 @@ export const catGenders = [
 ];
 
 export const responseTypes = {
-  Vague: 'Vague',
+  Weird: 'Weird',
   Kind: 'Kind',
   Funny: 'Funny',
   Serious: 'Serious',
@@ -119,7 +119,7 @@ export const catPersonalities = {
 
 export const catResponses = {
   [catPersonalities.Dreary]: {
-    likes: responseTypes.Vague,
+    likes: responseTypes.Weird,
     dislikes: [
       responseTypes.Serious,
       responseTypes.Funny,
@@ -128,7 +128,7 @@ export const catResponses = {
   [catPersonalities.Shy]: {
     likes: responseTypes.Kind,
     dislikes: [
-      responseTypes.Vague,
+      responseTypes.Weird,
       responseTypes.Funny,
     ],
   },
@@ -136,13 +136,13 @@ export const catResponses = {
     likes: responseTypes.Funny,
     dislikes: [
       responseTypes.Serious,
-      responseTypes.Vague,
+      responseTypes.Weird,
     ],
   },
   [catPersonalities.Angsty]: {
     likes: responseTypes.Serious,
     dislikes: [
-      responseTypes.Vague,
+      responseTypes.Weird,
       responseTypes.Kind,
     ],
   },
@@ -152,21 +152,21 @@ export const statGains = {
   [responseTypes.Serious]: 'seriousness',
   [responseTypes.Kind]: 'kindness',
   [responseTypes.Funny]: 'humor',
-  [responseTypes.Vague]: 'uncertainty',
+  [responseTypes.Weird]: 'weirdness',
 };
 
 export const statLosses = {
-  [responseTypes.Serious]: 'uncertainty',
+  [responseTypes.Serious]: 'weirdness',
   [responseTypes.Kind]: 'humor',
   [responseTypes.Funny]: 'seriousness',
-  [responseTypes.Vague]: 'kindness',
+  [responseTypes.Weird]: 'kindness',
 };
 
 export const statNames = {
   seriousness: 'Seriousness',
   kindness: 'Kindness',
   humor: 'Humor',
-  uncertainty: 'Vague',
+  weirdness: 'Weirdness',
 };
 
 export const catClasses = {

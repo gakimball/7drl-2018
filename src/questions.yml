@@ -3,232 +3,232 @@
     Serious: Yes, that would be a complete waste of money.
     Kind: If a boat would make you happy, you should buy a boat!
     Funny: Only if you take me with you so we can sail off into the sunset together.
-    Vague: What is waste? What is money?
+    Weird: What is waste? What is money?
 - text: Sometimes I see a bunch of humans in one place fighting over a ball. What are they doing? Why do they need the ball?
   answers:
     Serious: They're competing to see who's the best.
     Kind: It's called a game! Humans love games.
     Funny: Whoever gets the ball wins a million dollars.
-    Vague: They don't need the ball. Nobody needs anything.
+    Weird: They don't need the ball. Nobody needs anything.
 - text: I started collecting coins recently, but the bigger my collection grows, the emptier I feel inside. Is it even worth it?
   answers:
     Serious: One day those coins could be worth a lot of money.
     Kind: If the coins have value to you personally, then it's definitely worth it.
     Funny: You should collect something with real value, like cryptocurrency.
-    Vague: One day you will be gone, but those coins will live.
+    Weird: One day you will be gone, but those coins will live.
 - text: Are you human? I need to know something. How do I meet the cats inside those glowing boxes?
   answers:
     Serious: You can't. They aren't real.
     Kind: Those cats are actors. You should look them up on ICDB!
     Funny: If you put both paws on the screen, you can speak to them telepathically.
-    Vague: You'll never meet them. Instead you should meet yourself.
+    Weird: You'll never meet them. Instead you should meet yourself.
 - text: Have you ever made up an excuse so you didn't have to hang out with people? It makes me a little uncomfortable, but sometimes I really need time to myself, and I don't know how to express that.
   answers:
     Serious: Just be straight with them. You should be honest with people.
     Kind: You don't owe people anything. Always take care of yourself first.
     Funny: Tell them you're literally alergic to being around people.
-    Vague: You can't hang with people if you can't hang with yourself.
+    Weird: You can't hang with people if you can't hang with yourself.
 - text: I've been trying online dating, but it feels so... vapid. It relies entirely on looks and first impressions as a means to meet people, and I feel like I can't compete because I'm not great at putting myself out there like that.
   answers:
     Serious: You have to be traditionally attractive to succeed.
     Kind: There's someone out there for everyone. Be patient and be willing to put yourself out there.
     Funny: I just lie and tell people I'm a world traveller. Works everyt time.
-    Vague: Online, offline, it's all the same.
+    Weird: Online, offline, it's all the same.
 - text: Whenever I ask someone out, I pretty much always suggest going to a bar. Is that played out? It feels so simple to me.
   answers:
     Serious: It's simple, but it's predictable, so there's that.
     Kind: Bars are a great low-pressure environment to meet people in.
     Funny: I'm only fun to meet for the first time if I'm a little drunk.
-    Vague: Set the bar higher.
+    Weird: Set the bar higher.
 - text: Yesterday my friends made me be the person who picks where we get dinner, and then they got offended when I suggested somewhere inexpensive. What gives?
   answers:
     Serious: They're overly concerned about only having bespoke, artisinal eating experiences.
     Kind: Don't let what other people say affect you.
     Funny: You should have countered with a Michelin star restaurant.
-    Vague: One day nobody will have any money.
+    Weird: One day nobody will have any money.
 - text: You ever been out with a bunch of people, and eventually you realize you're the only one not in a conversation? What do you do?
   answers:
     Serious: Might as well leave.
     Kind: Be proactive in finding someone to talk to. Even a stranger!
     Funny: Stand up on a table and start yelling "I NEED VALIDATION!"
-    Vague: Go to the bathroom and cry.
+    Weird: Go to the bathroom and cry.
 - text: I've become afraid to get close to people recently, even people I've known for years. Why do you think that might be?
   answers:
     Serious: You might be becoming antisocial.
     Kind: You're worried about being a burden to other people.
     Funny: You're slowly morphing into a lizard person.
-    Vague: You're growing farther from yourself.
+    Weird: You're growing farther from yourself.
 - text: How would you comfort someone who has recently had a death in the family?
   answers:
     Serious: Tell them you're sorry.
     Kind: Just listen to them. Don't try to fix their problems.
     Funny: Remind them of the good times.
-    Vague: Death is inescapable.
+    Weird: Death is inescapable.
 -
   text: My partner really wants kittens, but I don't think I'm ready to be a parent. But when is the right time?
   answers:
     Serious: Just do it.
     Kind: No parents are ever truly ready, regardless of their situation.
     Funny: Oh don't worry, it'll happen on accident.
-    Vague: First you must find the kitten inside you.
+    Weird: First you must find the kitten inside you.
 -
   text: Okay, let's say you bested your mortal enemy in a catfight. What would your last words to them be as you stared them down?
   answers:
     Serious: You are dead. I won.
     Kind: I'm sorry it had to end this way.
     Funny: Is that the best you could do?
-    Vague: You are dead for real, but I remain dead inside.
+    Weird: You are dead for real, but I remain dead inside.
 -
   text: Have you ever been to California? What's it like?
   answers:
     Serious: It's awful. It's so pretentious.
     Kind: It's a beautiful state. A natural wonder.
     Funny: It's dangerous. Chemtrails will soon cause an earthquake that splits the state in half.
-    Vague: It never rains. Therefore it never pours.
+    Weird: It never rains. Therefore it never pours.
 -
   text: My boyfriend wants us to go to Paris over the summer, but I've never been in a country where I don't speak the language, and it has me feeling apprehensive.
   answers:
     Serious: You'll have to deal with it if you ever want to travel.
     Kind: Going with someone will make it feel less scary, because you won't be alone.
     Funny: The only phrase you need to learn is "Where's the bathroom?".
-    Vague: Before you can travel, you must travel to yourself.
+    Weird: Before you can travel, you must travel to yourself.
 -
   text: I've started to grow distant from my parents because I feel so different from them ideologically. But only I feel the distance, not them.
   answers:
     Serious: Just avoid talking about politics.
     Kind: Find ways to reconnect with them. You're family.
     Funny: Tell them you've become a socialist. They'll love that.
-    Vague: The distance you feel was inside yourself all along.
+    Weird: The distance you feel was inside yourself all along.
 -
   text: My mom called me the other day and asked me if I'd consider moving back closer to home, even though it's been five years since I moved out. I don't know what to say.
   answers:
     Serious: They need to suck it up and accept that life moves on.
     Kind: They just miss you! Maybe you should talk to them more.
     Funny: Threaten to move back in with them.
-    Vague: Move even farther away, until you've moved back home.
+    Weird: Move even farther away, until you've moved back home.
 -
   text: I'm the only person in my family that's not religious. Over time I feel like it's going to lead to problems. Should I be concerned?
   answers:
     Serious: It's a don't ask, don't tell situation.
     Kind: If they love you, they'll accept you for your beliefs.
     Funny: You should invent a new religion and become a global icon.
-    Vague: Practice the Religion of You first.
+    Weird: Practice the Religion of You first.
 -
   text: My mother once told me it's rude to clean yourself in public, but I do it all the time. Am I wrong?
   answers:
     Serious: Yeah, that's pretty gross.
     Kind: Proper grooming is important, but it should be something you keep to yourself.
     Funny: Not at all! I lick my butthole in public all the time.
-    Vague: Nobody is truly clean.
+    Weird: Nobody is truly clean.
 -
   text: Okay, be straight with me. What do you think of dogs?
   answers:
     Serious: They're man's best friend.
     Kind: They're wonderful animals, just like cats.
     Funny: When I see a cute dog, I eat it up.
-    Vague: Dogs are just cats with a soul.
+    Weird: Dogs are just cats with a soul.
 -
   text: I snatched a bird out of the air the other day. As I carried it in my jaws, I wondered if it had a family. Is it wrong to take a life like that?
   answers:
     Serious: That's nature. You need to eat.
     Kind: You don't need to eat birds. You can eat cat food.
     Funny: I heard that bird was a racist, so you're fine.
-    Vague: I know why the eaten bird sings.
+    Weird: I know why the eaten bird sings.
 -
   text: What's the ideal personality trait of a cat?
   answers:
     Serious: Independence.
     Kind: Grace.
     Funny: Chaos.
-    Vague: Dog.
+    Weird: Dog.
 -
   text: Look, I don't think all dogs are bad people, but when I see a dog walking down the street it just makes me... uncomfortable.
   answers:
     Serious: You need to take a serious look at your prejudices.
     Kind: Society has conditioned us to fear certain types of people. You have to rise above it.
     Funny: Just imagine them wearing only their underwear.
-    Vague: We're all the same. We all fear death.
+    Weird: We're all the same. We all fear death.
 -
   text: I recently discovered I have a clone. I want to kill her, but she's hiding behind a glass barrier that I can't break, no matter how hard I try. It's made me ask some hard questions about myself.
   answers:
     Serious: That's you. That's a mirror.
     Kind: Become her friend! You'd be surprised what you might learn about yourself.
     Funny: Break the glass, kill the clone. That's Science.
-    Vague: What if you are the clone?
+    Weird: What if you are the clone?
 -
   text: Most cats sleep fourteen hours a day, but I'm hoping to retire before I turn 10. I can't lose that much time, so I only sleep eight. Am I pushing myself too hard?
   answers:
     Serious: Yes. You'll die of exhaustion.
     Kind: You risk sacrificing your happiness when you're young for money.
     Funny: Why stop at eight? Make it a cool zero hours of sleep.
-    Vague: You're only worth as much as you sleep.
+    Weird: You're only worth as much as you sleep.
 -
   text: Why do humans pick up cats? Do they think we want to be moved? Would you like it if someone bigger than you randomly lifted you off your couch and talked to you?
   answers:
     Serious: When you put it that way, it makes sense.
     Kind: We're just trying to show affection and be close to you.
     Funny: Being lifted off of couches is kinda my thing, actually.
-    Vague: They pick you up for a pick-me-up.
+    Weird: They pick you up for a pick-me-up.
 -
   text: Be straight with me. Why can't cats be the dominant species of earth?
   answers:
     Serious: They aren't big enough.
     Kind: They're too soft and cuddly.
     Funny: They poop in boxes.
-    Vague: They don't realize they'll die one day.
+    Weird: They don't realize they'll die one day.
 -
   text: Why do people own dogs? How do they go to sleep at night without a fear of being murdered?
   answers:
     Serious: They sleep with a gun under their pillow.
     Kind: When a dog jumps on you, that's its way of showing affection.
     Funny: They've made a truce with the dogs. They give belly rubs and the dog agrees to not jump on the bed.
-    Vague: The dogs know who the true murderers are.
+    Weird: The dogs know who the true murderers are.
 -
   text: The other day someone asked me what I thought of putting pineapple on pizza, as if it was some funny joke I had missed out on. I don't get it.
   answers:
     Serious: It's a played-out meme. Why is it in this game?
     Kind: Pineapple on pizza is delicious! You should try it.
     Funny: They're warning you that pineapple on pizza is illegal in Iceland.
-    Vague: Memes are social currency for the bored.
+    Weird: Memes are social currency for the bored.
 -
   text: Have you ever sent something back at a restaurant? It seems so trite to me. Why complain about food?
   answers:
     Serious: You're entitled to it if they didn't prepare it right.
     Kind: Some people are just overly concerned about everything in life being perfect.
     Funny: I send back any food that has cilantro on it.
-    Vague: When you send back food, you're sending back your dignity.
+    Weird: When you send back food, you're sending back your dignity.
 -
   text: Do you prefer gin or vodka in a martini?
   answers:
     Serious: There's no such thing as a vodka martini.
     Kind: Vodka martinis are delicious. Just ask James Bond.
     Funny: I ask the bartender to pour some gin in a glass while thinking about vermouth.
-    Vague: Tequila martinis are my spirit animal.
+    Weird: Tequila martinis are my spirit animal.
 -
   text: Is it rude to ask someone why they're a vegetarian?
   answers:
     Serious: Yes. Their dietary habits don't affect you at all.
     Kind: Only if you're seeking an explanation for a lifestyle you find "wrong" for some reason.
     Funny: No. Plants are people too.
-    Vague: When you become vegetarian, a cow gets its wings.
+    Weird: When you become vegetarian, a cow gets its wings.
 -
   text: Why do so many companies insist on having open offices? They're loud and distracting.
   answers:
     Serious: They're cheap and encourage fraternization, which makes you a corporate drone.
     Kind: They make it easy to get to know your coworkers!
     Funny: They let me share my taste in music with everyone around me.
-    Vague: The open office opens up feelings of isolation.
+    Weird: The open office opens up feelings of isolation.
 -
   text: My new job has a culture that encourages coworkers to be friends. I'm hesitant to jump on that train again, because every time I leave a job, my friendships there dry up.
   answers:
     Serious: Seek real, serious friendships. Coworkers come and go.
     Kind: If you're truly friends, you'll stick together even as you change jobs.
     Funny: Force your coworkers to sign a Friendship Pact with you. In blood.
-    Vague: The only friend you need at work as your paycheck.
+    Weird: The only friend you need at work as your paycheck.
 -
   text: Have you ever felt guilty about leaving a job? How do you get past that?
   answers:
     Serious: I submit a written letter of resignation.
     Kind: I don't feel guilty because it's just a job. They can replace you.
     Funny: I just leave without telling anyone. They'll never know what hit them.
-    Vague: No one can force you stay. Not even yourself. 
+    Weird: No one can force you stay. Not even yourself. 
