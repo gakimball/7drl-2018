@@ -8,6 +8,7 @@ import Player from './player';
 import Encounter from './encounter';
 import Map from './map';
 import Stats from './stats';
+import Textarea from './textarea';
 import './app.css';
 
 class App extends Component {
@@ -105,12 +106,15 @@ class App extends Component {
               characters={characters}
             />
           )}</Stats>
-          <Display
-            border
-            y={20}
-            width={55}
-            height={10}
-          />
+          <Textarea textarea={this.game.getTextarea()}>{characters => (
+            <Display
+              border
+              y={20}
+              width={55}
+              height={10}
+              characters={characters}
+            />
+          )}</Textarea>
         </Container>
       </div>
     );

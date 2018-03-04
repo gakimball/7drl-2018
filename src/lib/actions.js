@@ -1,4 +1,4 @@
-import { Location, Playable } from './components';
+import { Location, Playable, Encounterable, Feline, Solid } from './components';
 import { getDirectionalCoords } from './utils';
 import { PLAYER_MOVED } from './events';
 
@@ -11,9 +11,10 @@ export function moveEntity(game, entity, direction) {
 
 // Place an entity in a specific location
 export function placeEntity(game, entity, x, y) {
-  const targets = game.getEntitiesAtLocation(x, y, true);
+  const targets = game.getEntitiesAtLocation(x, y);
+  const blockingTargets = targets.filter(t => t.hasComponent(Solid));
 
-  if (targets.length === 0) {
+  if (blockingTargets.length === 0) {
     if (!entity.hasComponent(Location)) {
       entity.addComponent(Location);
     }
@@ -23,6 +24,12 @@ export function placeEntity(game, entity, x, y) {
 
     if (entity.hasComponent(Playable)) {
       game.event(PLAYER_MOVED);
+
+      const encounter = targets.filter(t => t.hasComponent(Encounterable))[0];
+
+      if (encounter) {
+        beginEncounter(game, encounter);
+      }
     }
   }
 }
@@ -30,4 +37,22 @@ export function placeEntity(game, entity, x, y) {
 // Remove an entity from the physical world
 export function removeFromWorld(game, entity) {
   entity.removeComponent(Location);
+}
+
+export function beginEncounter(game, encounter) {
+  const pronouns = {
+    female: 'Her',
+    male: 'His',
+    nonbinary: 'Their',
+  };
+
+  if (encounter.hasComponent(Feline)) {
+    const { name } = encounter.encounterable;
+    const { gender, breed } = encounter.feline;
+    const a = breed[0] === 'A' ? 'an' : 'a';
+
+    game.setTextarea({
+      text: `You encounter ${name}, ${a} ${breed}. ${pronouns[gender]} fur looks soft and beautiful.`,
+    });
+  }
 }

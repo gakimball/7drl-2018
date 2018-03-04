@@ -12,15 +12,28 @@ export default class Game {
     this.createEntity = createEntityFactory(this.entities);
     this.onTick = onTick;
     this.eventLog = [];
-    this.display = {
-      text: null,
-      choices: [],
-    };
+    this.textarea = [];
     this.states = [
       FieldState,
     ];
 
     document.addEventListener('keydown', this.handleKey);
+  }
+
+  getTextarea() {
+    return this.textarea[0];
+  }
+
+  setTextarea(props) {
+    this.textarea.unshift({
+      text: '',
+      choices: [],
+      ...props
+    });
+  }
+
+  popTextarea() {
+    this.textArea.shift();
   }
 
   pushState(state) {
