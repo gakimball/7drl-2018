@@ -13,7 +13,7 @@ export function Solid() {}
 export function Living() {}
 
 export function Playable() {
-  this.life = 10;
+  this.life = 5;
   this.uncertainty = 0;
   this.kindness = 0;
   this.humor = 0;
@@ -28,4 +28,10 @@ export function Encounterable() {
 export function Feline() {
   this.gender = 'female';
   this.breed = 'Himalayan';
+  this.mood = 0;
+  this.questionsAsked = 0;
+}
+
+export function Party() {
+  this.contents = [];
 }

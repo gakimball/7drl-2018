@@ -1,7 +1,8 @@
 import { Location, Playable, Encounterable, Feline, Solid } from './components';
-import { getDirectionalCoords } from './utils';
+import { getDirectionalCoords, createQuestion } from './utils';
 import { PLAYER_MOVED } from './events';
 import { TextBoxState } from './states';
+import { catResponses, statGains, statLosses, statNames } from './constants';
 
 // Move an entity one square in a direction
 export function moveEntity(game, entity, direction) {
@@ -54,41 +55,94 @@ export function beginCatConversation(game, cat) {
   };
   const { name } = cat.encounterable;
   const { gender, breed, personality } = cat.feline;
-  const a = breed[0] === 'A' ? 'an' : 'a';
+  const a = char => char.toLowerCase()[0] === 'a' ? 'an' : 'a';
 
   startConversation(game, [
     {
-      text: `You encounter ${name}, ${a} ${breed}. ${pronouns[gender]} fur looks soft and beautiful.\n\nPersonality: ${personality}`,
+      text: `You encounter ${name}, ${a(breed)} ${breed}. ${pronouns[gender]} fur looks soft and beautiful.\n\nYou sense that ${name} has ${a(personality)} ${personality.toLowerCase()} personality.`,
     },
-    {
-      text: `"My boyfriend wants us to go to Paris over the summer, but I've never been in a country where I don't speak the language, and it has me feeling apprehensive."`,
-    },
-    {
-      choices: [
-        {
-          text: 'Yes, that would be a complete waste of money.',
-        },
-        {
-          text: 'If a boat would make you happy, you should buy a boat!',
-        },
-        {
-          text: 'Only if you take me with you so we can sail off into the sunset together.',
-        },
-      ],
-    },
-  ]);
+  ], () => {
+    removeFromWorld(game, cat);
+  });
+
+  continueConversation(game, cat, game.getActiveState());
 }
 
-export function startConversation(game, queue) {
-  const state = game.pushState(TextBoxState, queue);
+export function continueConversation(game, cat, state) {
+  const { name } = cat.encounterable;
+  const { personality } = cat.feline;
+  const player = game.getPlayer();
+
+  state.push(...createQuestion(personality, (state, choice) => {
+    const { type } = choice;
+    const responses = catResponses[personality];
+    let emotionText;
+    let statText;
+
+    if (type === responses.likes) {
+      const statGain = statGains[type];
+      adjustCatMood(game, cat, 1);
+      adjustPlayerStats(game, statGain, 1);
+      emotionText = 'begins purring contentedly';
+      statText = `gain +1 ${statNames[statGain]}`;
+    } else if (responses.dislikes.includes(type)) {
+      const statLoss = statLosses[type];
+      adjustCatMood(game, cat, -1);
+      adjustPlayerStats(game, statLoss, -1);
+      emotionText = 'hisses at you';
+      statText = `lose -1 ${statNames[statLoss]}`;
+    } else {
+      adjustCatMood(game, cat, 0);
+      emotionText = 'doesn\'t seem phased';
+    }
+
+    state.push({
+      text: `${name} ${emotionText}.${statText ? ` You ${statText}.` : ''}`,
+    });
+
+    deductCatQuestion(game, cat);
+
+    if (cat.feline.questionsAsked < 3) {
+      continueConversation(game, cat, state);
+    } else {
+      if (cat.feline.mood >= 2) {
+        state.push({
+          text: `${name} seems happy with you.`,
+        });
+        state.push({
+          text: `"Are you headed to the party? I'm coming with you. You look like you could use a ${cat.feline.class} in your gang."`,
+        });
+        state.push({
+          text: `${name} joins your party.`,
+          onReveal: () => addToParty(game, player, cat),
+        });
+      } else if (cat.feline.mood >= 0) {
+        state.push({
+          text: `${name} seems unimpressed with you.`,
+        });
+      } else {
+        state.push({
+          text: `${name} seems annoyed with you.`,
+        });
+      }
+    }
+
+    advanceConversation(game, state);
+  }));
+}
+
+export function startConversation(game, queue, onFinish) {
+  const state = game.pushState(TextBoxState, queue, onFinish);
   advanceConversation(game, state);
 }
 
 export function advanceConversation(game, state) {
   const textarea = state.next();
   game.setTextarea(textarea);
+  game.getTextarea().onReveal();
 
   if (!textarea) {
+    state.onFinish();
     game.popState();
   } else {
     if (game.getTextarea().choices.length > 0) {
@@ -109,4 +163,26 @@ export function navigateConversation(game, state, direction) {
       state.choice++;
     }
   }
+}
+
+export function makeConversationSelection(game, state) {
+  const textarea = game.getTextarea();
+
+  textarea.onChoice(state, textarea.choices[state.choice]);
+}
+
+export function adjustCatMood(game, cat, change) {
+  cat.feline.mood += change;
+}
+
+export function adjustPlayerStats(game, stat, change) {
+  game.getPlayer().playable[stat] += change;
+}
+
+export function deductCatQuestion(game, cat) {
+  cat.feline.questionsAsked++;
+}
+
+export function addToParty(game, entity, member) {
+  entity.party.contents.push(member);
 }

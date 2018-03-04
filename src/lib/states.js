@@ -1,4 +1,4 @@
-import { moveEntity, advanceConversation, navigateConversation } from './actions';
+import { moveEntity, advanceConversation, navigateConversation, makeConversationSelection } from './actions';
 
 export const FieldState = game => event => {
   const player = game.getPlayer();
@@ -31,14 +31,18 @@ FieldState.controls = [
   },
 ];
 
-export const TextBoxState = (game, textareas) => {
+export const TextBoxState = (game, textareas = [], onFinish = () => {}) => {
   const queue = textareas;
   const handler = event => {
     let handled = true;
 
     switch (event.key) {
       case ' ':
-        game.runAction(advanceConversation, handler);
+        if (game.getTextarea().choices.length > 0) {
+          game.runAction(makeConversationSelection, handler);
+        } else {
+          game.runAction(advanceConversation, handler);
+        }
         break;
       case 'ArrowUp':
         game.runAction(navigateConversation, handler, 'up');
@@ -55,7 +59,9 @@ export const TextBoxState = (game, textareas) => {
 
   handler.next = () => queue.shift();
   handler.current = () => queue[0];
+  handler.push = (...args) => queue.push(...args);
   handler.choice = -1;
+  handler.onFinish = onFinish;
 
   return handler;
 }

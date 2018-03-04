@@ -1,7 +1,7 @@
 import catNames from 'cat-names';
-import { Drawable, Location, Solid, Living, Playable, Encounterable, Feline } from './components';
+import { Drawable, Location, Solid, Living, Playable, Encounterable, Feline, Party } from './components';
 import { componentPropertyName, randomOf } from './utils';
-import { catBreeds, catGenders, catPersonalities } from './constants';
+import { catBreeds, catGenders, catPersonalities, catClasses } from './constants';
 
 export default manager => (type, props = {}) => {
   const entity = manager.createEntity();
@@ -22,7 +22,7 @@ export default manager => (type, props = {}) => {
   return entity;
 };
 
-export const Player = [[Drawable, { character: '@', color: '#5fbcff' }], Location, Solid, Living, Playable];
+export const Player = [[Drawable, { character: '@', color: '#5fbcff' }], Location, Solid, Living, Playable, Party];
 
 export const Wall = [[Drawable, { character: '•', color: '#ccc' }], Location, Solid];
 
@@ -41,5 +41,7 @@ export const randomCat = () => [
     gender: randomOf(catGenders),
     breed: randomOf(catBreeds),
     personality: randomOf(catPersonalities),
+    mood: 0,
+    class: randomOf(catClasses),
   }],
 ];

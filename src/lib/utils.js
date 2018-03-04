@@ -1,6 +1,7 @@
 import rot from 'rot-js';
 import randomInt from 'random-int';
-import { responseTypes, catResponses } from './constants';
+import arrayShuffle from 'array-shuffle';
+import { responseTypes, catResponses, sampleQuestion } from './constants';
 
 export function createLevel() {
   const levelWidth = 15;
@@ -84,18 +85,23 @@ function randomOfArray(array) {
   return array[randomInt(array.length - 1)];
 }
 
-export function createQuestion(personality) {
+export function createQuestion(personality, onChoice) {
+  const question = sampleQuestion;
   const response = catResponses[personality];
   const options = Object.values(responseTypes).filter(r => r !== response.likes);
 
   options.splice(randomInt(2), 1);
   options.push(response.likes);
 
-  return {
-    text: 'What will you say to me?',
-    answers: options.map(type => ({
-      text: `${type} answer.`,
-      type,
-    })),
-  };
+  return [
+    {
+      text: `"${question.text}"`,
+    },
+    {
+      choices: arrayShuffle(Object.entries(question.answers))
+        .filter(([type]) => options.includes(type))
+        .map(([type, text]) => ({ type, text })),
+      onChoice,
+    },
+  ];
 }

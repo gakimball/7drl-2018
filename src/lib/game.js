@@ -30,6 +30,8 @@ export default class Game {
     this.textarea = {
       text: '',
       choices: [],
+      onChoice: () => {},
+      onReveal: () => {},
       ...props
     };
   }
@@ -88,6 +90,8 @@ export default class Game {
 
     createAtRandom(Player);
     createAtRandom(randomCat());
+    createAtRandom(randomCat());
+    createAtRandom(randomCat());
 
     this.tick();
   }
@@ -116,7 +120,7 @@ export default class Game {
     const { x, y } = this.getPlayer().location;
 
     const target = this.entities
-      .queryComponents([Encounterable])
+      .queryComponents([Encounterable, Location])
       .filter(entity => entity.location.x === x && entity.location.y === y)[0];
 
     if (target) {
