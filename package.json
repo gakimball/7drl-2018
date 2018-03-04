@@ -19,9 +19,15 @@
     "wordwrap": "^1.0.0"
   },
   "scripts": {
+    "prestart": "npm run build-questions",
     "start": "react-scripts start",
+    "prebuild": "npm run build-questions",
     "build": "react-scripts build",
     "test": "react-scripts test --env=jsdom",
-    "eject": "react-scripts eject"
+    "eject": "react-scripts eject",
+    "build-questions": "any-json src/questions.yml > src/lib/questions.json"
+  },
+  "devDependencies": {
+    "any-json": "^3.1.0"
   }
 }
