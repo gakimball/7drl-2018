@@ -12,30 +12,30 @@ export default class Game {
     this.createEntity = createEntityFactory(this.entities);
     this.onTick = onTick;
     this.eventLog = [];
-    this.textarea = [];
+    this.textarea = null;
     this.states = [];
 
     document.addEventListener('keydown', this.handleKey);
   }
 
   getTextarea() {
-    return this.textarea[0];
+    return this.textarea;
   }
 
   setTextarea(props) {
-    this.textarea.unshift({
+    if (props === null) {
+      this.textarea = null;
+    }
+
+    this.textarea = {
       text: '',
       choices: [],
       ...props
-    });
+    };
   }
 
   getControls() {
     return this.getActiveState().controls;
-  }
-
-  popTextarea() {
-    this.textarea.shift();
   }
 
   pushState(state, ...args) {
@@ -43,6 +43,8 @@ export default class Game {
 
     handler.controls = state.controls;
     this.states.unshift(handler);
+
+    return handler;
   }
 
   popState() {

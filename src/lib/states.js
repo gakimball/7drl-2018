@@ -1,4 +1,4 @@
-import { moveEntity, dismissTextarea } from './actions';
+import { moveEntity, advanceConversation } from './actions';
 
 export const FieldState = game => event => {
   const player = game.getPlayer();
@@ -31,15 +31,14 @@ FieldState.controls = [
   },
 ];
 
-export const TextBoxState = (game, textarea) => {
-  game.setTextarea(textarea);
-
-  return event => {
+export const TextBoxState = (game, textareas) => {
+  const queue = textareas;
+  const handler = event => {
     let handled = true;
 
     switch (event.key) {
       case ' ':
-        game.runAction(dismissTextarea);
+        game.runAction(advanceConversation, handler);
         break;
       default:
         handled = false;
@@ -47,6 +46,10 @@ export const TextBoxState = (game, textarea) => {
 
     return handled;
   };
+
+  handler.next = () => queue.shift();
+
+  return handler;
 }
 
 TextBoxState.controls = [

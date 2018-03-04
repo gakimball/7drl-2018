@@ -41,24 +41,38 @@ export function removeFromWorld(game, entity) {
 }
 
 export function beginEncounter(game, encounter) {
+  if (encounter.hasComponent(Feline)) {
+    beginCatConversation(game, encounter);
+  }
+}
+
+export function beginCatConversation(game, cat) {
   const pronouns = {
     female: 'Her',
     male: 'His',
     nonbinary: 'Their',
   };
+  const { name } = cat.encounterable;
+  const { gender, breed, personality } = cat.feline;
+  const a = breed[0] === 'A' ? 'an' : 'a';
 
-  if (encounter.hasComponent(Feline)) {
-    const { name } = encounter.encounterable;
-    const { gender, breed, personality } = encounter.feline;
-    const a = breed[0] === 'A' ? 'an' : 'a';
-
-    game.pushState(TextBoxState, {
+  startConversation(game, [
+    {
       text: `You encounter ${name}, ${a} ${breed}. ${pronouns[gender]} fur looks soft and beautiful.\n\nPersonality: ${personality}`,
-    });
-  }
+    },
+  ]);
 }
 
-export function dismissTextarea(game) {
-  game.popTextarea();
-  game.popState();
+export function startConversation(game, queue) {
+  const state = game.pushState(TextBoxState, queue);
+  advanceConversation(game, state);
+}
+
+export function advanceConversation(game, state) {
+  const textarea = state.next();
+  game.setTextarea(textarea);
+
+  if (!textarea) {
+    game.popState();
+  }
 }

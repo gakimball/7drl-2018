@@ -103,9 +103,47 @@ export const catGenders = [
   'nonbinary',
 ];
 
+export const responseTypes = {
+  Vague: 'Vague',
+  Kind: 'Kind',
+  Funny: 'Funny',
+  Serious: 'Serious',
+};
+
 export const catPersonalities = {
   Dreary: 'Dreary',
   Shy: 'Shy',
   Aloof: 'Aloof',
   Angsty: 'Angsty',
 };
+
+export const catResponses = {
+  [catPersonalities.Dreary]: {
+    likes: responseTypes.Vague,
+    dislikes: [
+      responseTypes.Serious,
+      responseTypes.Funny,
+    ],
+  },
+  [catPersonalities.Shy]: {
+    likes: responseTypes.Kind,
+    dislikes: [
+      responseTypes.Vague,
+      responseTypes.Funny,
+    ],
+  },
+  [catPersonalities.Aloof]: {
+    likes: responseTypes.Funny,
+    dislikes: [
+      responseTypes.Serious,
+      responseTypes.Vague,
+    ],
+  },
+  [catPersonalities.Angsty]: {
+    likes: responseTypes.Serious,
+    dislikes: [
+      responseTypes.Vague,
+      responseTypes.Kind,
+    ],
+  },
+}
