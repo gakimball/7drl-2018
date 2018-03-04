@@ -16,11 +16,15 @@ export default class Display extends Component {
     ])),
     height: PropTypes.number.isRequired,
     width: PropTypes.number.isRequired,
+    x: PropTypes.number,
+    y: PropTypes.number,
   }
 
   static defaultProps = {
     border: true,
     characters: [],
+    x: 0,
+    y: 0,
   }
 
   get boxCharacters() {
@@ -40,12 +44,12 @@ export default class Display extends Component {
     return string;
   }
 
-  line(line, edge) {
+  line(line, index, edge) {
     const { border, width } = this.props;
     const padding = border && width - line.length - 2;
 
     return (
-      <div key={line} className="Display__line">
+      <div key={index} className="Display__line">
         {border && edge && this.character(this.boxCharacters.vertical)}
         {[...line].map((char, index) => this.character(char, index))}
         {border && edge && Array(padding).fill(' ').map((_, i) => this.character(' ', `padding-${i}`))}
@@ -63,18 +67,25 @@ export default class Display extends Component {
   }
 
   render() {
-    const { border, characters, height, width } = this.props;
+    const { border, characters, height, width, x, y } = this.props;
+    const padding = border && height - characters.length - 2;
 
     return (
       <div className="Display" style={{
         width: `${width * 13}px`,
         height: `${height * 20}px`,
+        position: 'absolute',
+        left: `${x * 13}px`,
+        top: `${y * 20}px`,
       }}>
-        {border && this.line(this.getHorizontalBorder())}
+        {border && this.line(this.getHorizontalBorder(), -1)}
         {characters.map((line, index, arr) =>
-          this.line(line, index === 0 || index === arr.length - 1)
+          this.line(line, index, true)
         )}
-        {border && this.line(this.getHorizontalBorder(true))}
+        {border && Array(padding).fill('').map((line, index) =>
+          this.line(Array(width - 2).fill(' '), index, true),
+        )}
+        {border && this.line(this.getHorizontalBorder(true), -2)}
       </div>
     );
   }

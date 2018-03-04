@@ -4,10 +4,15 @@
   "private": true,
   "dependencies": {
     "cli-boxes": "^1.0.0",
+    "mobx": "^3.6.1",
+    "mobx-react": "^4.4.2",
     "prop-types": "^15.6.1",
+    "random-int": "^1.0.0",
     "react": "^16.2.0",
     "react-dom": "^16.2.0",
-    "react-scripts": "1.1.1"
+    "react-scripts": "1.1.1",
+    "rot-js": "^0.6.5",
+    "tiny-ecs": "^2.0.0"
   },
   "scripts": {
     "start": "react-scripts start",
