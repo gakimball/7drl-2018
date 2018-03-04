@@ -3,7 +3,7 @@ import randomInt from 'random-int';
 import { createLevel } from './utils';
 import createEntityFactory, { Player, Wall, randomCat } from './entities';
 import { Drawable, Location, Playable, Encounterable, Solid } from './components';
-import { moveEntity } from './actions';
+import { FieldState } from './states';
 
 export default class Game {
   constructor(onTick = () => {}) {
@@ -16,8 +16,19 @@ export default class Game {
       text: null,
       choices: [],
     };
+    this.states = [
+      FieldState,
+    ];
 
     document.addEventListener('keydown', this.handleKey);
+  }
+
+  pushState(state) {
+    this.states.unshift(state);
+  }
+
+  popState() {
+    this.states.shift();
   }
 
   start() {
@@ -50,29 +61,11 @@ export default class Game {
     this.tick();
   }
 
-  handleKey = e => {
-    const player = this.getPlayer();
-    let handled = true;
-
-    switch (e.key) {
-      case 'ArrowUp':
-        this.runAction(moveEntity, player, 'up');
-        break;
-      case 'ArrowDown':
-        this.runAction(moveEntity, player, 'down');
-        break;
-      case 'ArrowLeft':
-        this.runAction(moveEntity, player, 'left');
-        break;
-      case 'ArrowRight':
-        this.runAction(moveEntity, player, 'right');
-        break;
-      default:
-        handled = false;
-    }
+  handleKey = event => {
+    const handled = this.states[0](this, event);
 
     if (handled) {
-      e.preventDefault();
+      event.preventDefault();
     }
   }
 
