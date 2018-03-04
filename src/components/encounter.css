@@ -1,9 +1,16 @@
+@keyframes Encounter__animation {
+  0% { opacity: 1 }
+  50% { opacity: 0 }
+  100% { opacity: 1 }
+}
+
 .Encounter {
   width: 400px;
   position: absolute;
   bottom: 350px;
   right: 560px;
   z-index: 1;
+  animation: 0.1s linear 0s 3 normal both running Encounter__animation;
 }
 
 .Encounter__image {
