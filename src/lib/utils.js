@@ -1,12 +1,12 @@
 import rot from 'rot-js';
 import randomInt from 'random-int';
 import arrayShuffle from 'array-shuffle';
-import { responseTypes, catResponses, sampleQuestion } from './constants';
+import { responseTypes, catResponses } from './constants';
 import questions from './questions';
 
-export function createLevel() {
-  const levelWidth = 15;
-  const levelHeight = 10;
+export function createMaze() {
+  const levelWidth = 50;
+  const levelHeight = 50;
   const maze = new rot.Map.EllerMaze(levelWidth, levelHeight);
   const map = createEmptyArray(levelWidth, levelHeight, false);
 

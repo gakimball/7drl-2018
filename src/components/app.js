@@ -92,7 +92,7 @@ class App extends Component {
               border
               x={55}
               width={25}
-              height={12}
+              height={13}
               characters={characters}
               debug
             />
@@ -101,9 +101,9 @@ class App extends Component {
             <Display
               border
               x={55}
-              y={12}
+              y={13}
               width={25}
-              height={18}
+              height={17}
               characters={characters}
             />
           )}</Stats>

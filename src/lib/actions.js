@@ -1,8 +1,46 @@
+import randomInt from 'random-int';
 import { Location, Playable, Encounterable, Feline, Solid } from './components';
-import { getDirectionalCoords, createQuestion } from './utils';
+import { getDirectionalCoords, createQuestion, createMaze } from './utils';
+import { Wall, Player, randomCat } from './entities';
 import { PLAYER_MOVED } from './events';
-import { TextBoxState } from './states';
+import { FieldState, TextBoxState } from './states';
 import { catResponses, statGains, statLosses, statNames } from './constants';
+
+export function createLevel(game) {
+  game.pushState(FieldState);
+
+  const level = createMaze();
+
+  // Create walls
+  level.forEach((row, y) => row.forEach((col, x) => {
+    if (col) {
+      game.createEntity(Wall, {
+        location: { x, y },
+      });
+    }
+  }));
+
+  const createAtRandom = (entity) => {
+    const x = randomInt(14);
+    const y = randomInt(9);
+
+    if (game.getEntitiesAtLocation(x, y).length > 0) {
+      createAtRandom(entity);
+    } else {
+      game.createEntity(entity, {
+        location: { x, y },
+      });
+    }
+  }
+
+  // Create player
+  createAtRandom(Player);
+
+  // Create cats
+  for (let i = 0; i < 10; i++) {
+    createAtRandom(randomCat());
+  }
+}
 
 // Move an entity one square in a direction
 export function moveEntity(game, entity, direction) {

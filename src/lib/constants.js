@@ -148,16 +148,6 @@ export const catResponses = {
   },
 }
 
-export const sampleQuestion = {
-  text: `I'm thinking about buying a boat. Would that be a waste of money?`,
-  answers: {
-    [responseTypes.Serious]: 'Yes, that would be a complete waste of money.',
-    [responseTypes.Kind]: 'If a boat would make you happy, you should buy a boat!',
-    [responseTypes.Funny]: 'Only if you take me with you so we can sail off into the sunset together.',
-    [responseTypes.Vague]: 'What is waste? What is money?',
-  },
-};
-
 export const statGains = {
   [responseTypes.Serious]: 'seriousness',
   [responseTypes.Kind]: 'kindness',

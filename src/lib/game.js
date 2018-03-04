@@ -1,14 +1,11 @@
 import { EntityManager } from 'tiny-ecs';
-import randomInt from 'random-int';
-import { createLevel } from './utils';
-import createEntityFactory, { Player, Wall, randomCat } from './entities';
+import { createLevel } from './actions';
+import createEntityFactory from './entities';
 import { Drawable, Location, Playable, Encounterable, Solid } from './components';
-import { FieldState } from './states';
 
 export default class Game {
   constructor(onTick = () => {}) {
     this.entities = new EntityManager();
-    this.level = createLevel();
     this.createEntity = createEntityFactory(this.entities);
     this.onTick = onTick;
     this.eventLog = [];
@@ -63,37 +60,7 @@ export default class Game {
   }
 
   start() {
-    this.pushState(FieldState);
-
-    // Create walls
-    this.level.forEach((row, y) => row.forEach((col, x) => {
-      if (col) {
-        this.createEntity(Wall, {
-          location: { x, y },
-        });
-      }
-    }));
-
-    // Create player
-    const createAtRandom = (entity) => {
-      const x = randomInt(14);
-      const y = randomInt(9);
-
-      if (this.getEntitiesAtLocation(x, y).length > 0) {
-        createAtRandom(entity);
-      } else {
-        this.createEntity(entity, {
-          location: { x, y },
-        });
-      }
-    }
-
-    createAtRandom(Player);
-    createAtRandom(randomCat());
-    createAtRandom(randomCat());
-    createAtRandom(randomCat());
-
-    this.tick();
+    this.runAction(createLevel);
   }
 
   getActiveState() {
