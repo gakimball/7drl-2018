@@ -11,8 +11,18 @@ export default class Display extends Component {
       ...Object.keys(boxes),
     ]),
     characters: PropTypes.arrayOf(PropTypes.oneOfType([
+      // A row can be one string of characters
       PropTypes.string,
-      PropTypes.arrayOf(PropTypes.string),
+      // A row can be an array of characters
+      PropTypes.arrayOf(PropTypes.oneOfType([
+        // A character can be a string
+        PropTypes.string,
+        // A character can be an object with color metadata
+        PropTypes.exact({
+          character: PropTypes.string.isRequired,
+          color: PropTypes.string.isRequired,
+        }),
+      ])),
     ])),
     height: PropTypes.number.isRequired,
     render: PropTypes.node,

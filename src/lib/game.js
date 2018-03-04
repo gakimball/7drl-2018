@@ -1,8 +1,8 @@
 import { EntityManager } from 'tiny-ecs';
 import randomInt from 'random-int';
 import { createLevel } from './utils';
-import createEntityFactory, { Player, Wall } from './entities';
-import { Drawable, Location, Playable } from './components';
+import createEntityFactory, { Player, Wall, randomCat } from './entities';
+import { Drawable, Location, Playable, Encounterable, Solid } from './components';
 import { moveEntity } from './actions';
 
 export default class Game {
@@ -26,26 +26,27 @@ export default class Game {
     }));
 
     // Create player
-    const createPlayer = () => {
+    const createAtRandom = (entity) => {
       const x = randomInt(14);
       const y = randomInt(9);
 
-      if (this.getEntitiesAtLocation(x, y)) {
-        createPlayer();
+      if (this.getEntitiesAtLocation(x, y).length > 0) {
+        createAtRandom(entity);
       } else {
-        this.createEntity(Player, {
+        this.createEntity(entity, {
           location: { x, y },
         });
       }
     }
 
-    createPlayer();
+    createAtRandom(Player);
+    createAtRandom(randomCat());
 
     this.tick();
   }
 
   handleKey = e => {
-    const player = this.entities.queryComponents([Playable])[0];
+    const player = this.getPlayer();
     let handled = true;
 
     switch (e.key) {
@@ -70,18 +71,36 @@ export default class Game {
     }
   }
 
-  getEntitiesAtLocation(targetX, targetY) {
-    const entities = this.entities.queryComponents([Location]);
+  getPlayer() {
+    return this.entities.queryComponents([Playable])[0];
+  }
 
-    for (const entity of entities) {
-      const { x, y } = entity.location;
+  getCurrentEncounter() {
+    const { x, y } = this.getPlayer().location;
 
-      if (targetX === x && targetY === y) {
-        return entity;
-      }
+    const target = this.entities
+      .queryComponents([Encounterable])
+      .filter(entity => entity.location.x === x && entity.location.y === y)[0];
+
+    if (target) {
+      return target.encounterable;
     }
 
     return null;
+  }
+
+  getEntitiesAtLocation(targetX, targetY, solidOnly = false) {
+    const entities = this.entities.queryComponents([Location]);
+
+    return entities.reduce((list, entity) => {
+      const { x, y } = entity.location;
+
+      if (targetX === x && targetY === y && (!solidOnly || entity.hasComponent(Solid))) {
+        return list.concat([entity]);
+      }
+
+      return list;
+    }, []);
   }
 
   getDrawableEntities() {

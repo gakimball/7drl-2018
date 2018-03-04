@@ -10,9 +10,9 @@ export function moveEntity(game, entity, direction) {
 
 // Place an entity in a specific location
 export function placeEntity(game, entity, x, y) {
-  const target = game.getEntitiesAtLocation(x, y);
+  const targets = game.getEntitiesAtLocation(x, y, true);
 
-  if (!target) {
+  if (targets.length === 0) {
     if (!entity.hasComponent(Location)) {
       entity.addComponent(Location);
     }

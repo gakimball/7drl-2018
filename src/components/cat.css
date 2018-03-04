@@ -1,8 +1,9 @@
 .Cat {
   width: 400px;
   position: absolute;
-  bottom: 150px;
-  right: 200px;
+  bottom: 350px;
+  right: 560px;
+  z-index: 1;
 }
 
 .Cat__image {

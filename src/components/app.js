@@ -10,6 +10,7 @@ import './app.css';
 class App extends Component {
   state = {
     playerWalking: false,
+    ready: false,
   }
 
   constructor(props) {
@@ -20,6 +21,10 @@ class App extends Component {
 
   componentDidMount() {
     this.game.start();
+
+    this.setState({
+      ready: true,
+    });
   }
 
   map() {
@@ -32,25 +37,40 @@ class App extends Component {
       map[y][x] = { character, color };
     });
 
+    const player = this.game.getPlayer();
+
+    if (player) {
+      map[player.location.y][player.location.x] = {
+        character: player.drawable.character,
+        color: player.drawable.color,
+      };
+    }
+
     return map;
   }
 
   render() {
-    const { playerWalking } = this.state;
+    const { playerWalking, ready } = this.state;
+
+    if (!ready) {
+      return null;
+    }
+
+    const encounter = this.game.getCurrentEncounter();
+
+    console.log(encounter);
 
     return (
       <div className="App">
         <Container width={80} height={30}>
+          <Player key="player" walking={playerWalking} />
+          {encounter && <Cat key="cat" image={encounter.image} />}
           <Display
             x={0}
             y={0}
             width={55}
             height={20}
-            characters={['Hello world']}
-            render={[
-              <Player key="player" walking={playerWalking} />,
-              <Cat key="cat" />
-            ]}
+            characters={encounter ? ['', ` ${encounter.name}`] : []}
           />
           <Display
             border

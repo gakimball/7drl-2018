@@ -13,3 +13,8 @@ export function Solid() {}
 export function Living() {}
 
 export function Playable() {}
+
+export function Encounterable() {
+  this.image = null;
+  this.name = 'Unknown Thing';
+}

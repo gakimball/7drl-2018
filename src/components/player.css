@@ -1,11 +1,12 @@
 .Player {
   position: absolute;
-  bottom: 77px;
-  right: 60px;
+  bottom: 277px;
+  right: 390px;
   overflow: hidden;
   height: 65px;
   image-rendering: pixelated;
   transform: scale(3);
+  z-index: 1;
 }
 
 .Player__image {
