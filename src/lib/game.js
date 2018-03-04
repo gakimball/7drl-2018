@@ -39,7 +39,10 @@ export default class Game {
   }
 
   pushState(state, ...args) {
-    this.states.unshift(state(this, ...args));
+    const handler = state(this, ...args);
+
+    handler.controls = state.controls;
+    this.states.unshift(handler);
   }
 
   popState() {

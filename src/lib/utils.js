@@ -1,4 +1,5 @@
 import rot from 'rot-js';
+import randomInt from 'random-int';
 
 export function createLevel() {
   const levelWidth = 15;
@@ -67,5 +68,17 @@ export function getDirectionalCoords(x, y, direction) {
 }
 
 export function createEmptyArray(width, height, content = false) {
-  return Array(height).fill('').map(() => Array(width).fill(content))
+  return Array(height).fill('').map(() => Array(width).fill(content));
+}
+
+export function randomOf(array) {
+  if (Array.isArray(array)) {
+    return randomOfArray(array);
+  }
+
+  return array[randomOfArray(Object.keys(array))];
+}
+
+function randomOfArray(array) {
+  return array[randomInt(array.length - 1)];
 }

@@ -47,7 +47,6 @@ export default class Display extends Component {
 
   shouldComponentUpdate(nextProps) {
     if (this.props.characters.length !== nextProps.characters.length) {
-      if (this.props.debug) console.log('Length was not the same');
       return true;
     }
 

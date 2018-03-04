@@ -1,5 +1,3 @@
-import randomInt from 'random-int';
-
 export const catBreeds = [
   'Abyssinian',
   'Aegean',
@@ -99,12 +97,15 @@ export const catBreeds = [
   'York Chocoalte',
 ];
 
-catBreeds.random = () => catBreeds[randomInt(catBreeds.length - 1)];
-
 export const catGenders = [
   'male',
   'female',
   'nonbinary',
 ];
 
-catGenders.random = () => catGenders[randomInt(catGenders.length - 1)];
+export const catPersonalities = {
+  Dreary: 'Dreary',
+  Shy: 'Shy',
+  Aloof: 'Aloof',
+  Angsty: 'Angsty',
+};

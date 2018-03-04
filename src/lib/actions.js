@@ -49,11 +49,11 @@ export function beginEncounter(game, encounter) {
 
   if (encounter.hasComponent(Feline)) {
     const { name } = encounter.encounterable;
-    const { gender, breed } = encounter.feline;
+    const { gender, breed, personality } = encounter.feline;
     const a = breed[0] === 'A' ? 'an' : 'a';
 
     game.pushState(TextBoxState, {
-      text: `You encounter ${name}, ${a} ${breed}. ${pronouns[gender]} fur looks soft and beautiful.`,
+      text: `You encounter ${name}, ${a} ${breed}. ${pronouns[gender]} fur looks soft and beautiful.\n\nPersonality: ${personality}`,
     });
   }
 }

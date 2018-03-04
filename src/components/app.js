@@ -57,7 +57,7 @@ class App extends Component {
       }
     }
 
-    if (!updateQueued) {
+    if (events.length === 0 || !updateQueued) {
       this.forceUpdate();
     }
   };
