@@ -11,6 +11,7 @@ export default class Game {
     this.level = createLevel();
     this.createEntity = createEntityFactory(this.entities);
     this.onTick = onTick;
+    this.eventLog = [];
 
     document.addEventListener('keydown', this.handleKey);
   }
@@ -71,6 +72,10 @@ export default class Game {
     }
   }
 
+  event(type, data = {}) {
+    this.eventLog.push({ type, data });
+  }
+
   getPlayer() {
     return this.entities.queryComponents([Playable])[0];
   }
@@ -113,6 +118,7 @@ export default class Game {
   }
 
   tick() {
-    this.onTick();
+    this.onTick(this.eventLog);
+    this.eventLog = [];
   }
 }

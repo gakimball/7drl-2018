@@ -1,6 +1,8 @@
 import React, { Component } from 'react';
+import wait from 'wait-then';
 import Game from '../lib/game';
 import { createEmptyArray } from '../lib/utils';
+import { PLAYER_MOVED } from '../lib/events';
 import Container from './container';
 import Display from './display';
 import Player from './player';
@@ -16,7 +18,7 @@ class App extends Component {
   constructor(props) {
     super(props);
 
-    this.game = new Game(() => this.forceUpdate());
+    this.game = new Game(this.handleTick);
   }
 
   componentDidMount() {
@@ -26,6 +28,36 @@ class App extends Component {
       ready: true,
     });
   }
+
+  async componentDidUpdate(prevProps, prevState) {
+    if (!prevState.playerWalking && this.state.playerWalking) {
+      await wait(1000 / 24 * 15);
+
+      this.setState({
+        playerWalking: false,
+      });
+    }
+  }
+
+  handleTick = events => {
+    let updateQueued = true;
+
+    for (const event of events) {
+      switch (event.type) {
+        case PLAYER_MOVED:
+          this.setState({
+            playerWalking: true,
+          });
+          break;
+        default:
+          updateQueued = false;
+      }
+    }
+
+    if (!updateQueued) {
+      this.forceUpdate();
+    }
+  };
 
   map() {
     const map = createEmptyArray(15, 10, ' ');
@@ -57,8 +89,6 @@ class App extends Component {
     }
 
     const encounter = this.game.getCurrentEncounter();
-
-    console.log(encounter);
 
     return (
       <div className="App">

@@ -1,5 +1,6 @@
-import { Location } from './components';
+import { Location, Playable } from './components';
 import { getDirectionalCoords } from './utils';
+import { PLAYER_MOVED } from './events';
 
 // Move an entity one square in a direction
 export function moveEntity(game, entity, direction) {
@@ -19,6 +20,10 @@ export function placeEntity(game, entity, x, y) {
 
     entity.location.x = x;
     entity.location.y = y;
+
+    if (entity.hasComponent(Playable)) {
+      game.event(PLAYER_MOVED);
+    }
   }
 }
 
