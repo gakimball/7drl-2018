@@ -12,7 +12,13 @@ export function Solid() {}
 
 export function Living() {}
 
-export function Playable() {}
+export function Playable() {
+  this.life = 10;
+  this.uncertainty = 0;
+  this.kindness = 0;
+  this.humor = 0;
+  this.seriousness = 0;
+}
 
 export function Encounterable() {
   this.image = null;

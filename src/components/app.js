@@ -7,6 +7,7 @@ import Display from './display';
 import Player from './player';
 import Encounter from './encounter';
 import Map from './map';
+import Stats from './stats';
 import './app.css';
 
 class App extends Component {
@@ -66,6 +67,7 @@ class App extends Component {
       return null;
     }
 
+    const player = this.game.getPlayer();
     const encounter = this.game.getCurrentEncounter();
 
     return (
@@ -81,7 +83,7 @@ class App extends Component {
             characters={encounter ? ['', ` ${encounter.name}`] : []}
           />
           <Map
-            player={this.game.getPlayer()}
+            player={player}
             entities={this.game.getDrawableEntities()}
           >{characters => (
             <Display
@@ -93,13 +95,16 @@ class App extends Component {
               debug
             />
           )}</Map>
-          <Display
-            border
-            x={55}
-            y={12}
-            width={25}
-            height={18}
-          />
+          <Stats player={player}>{characters => (
+            <Display
+              border
+              x={55}
+              y={12}
+              width={25}
+              height={18}
+              characters={characters}
+            />
+          )}</Stats>
           <Display
             border
             y={20}
