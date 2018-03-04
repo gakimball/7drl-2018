@@ -1,6 +1,7 @@
 import catNames from 'cat-names';
-import { Drawable, Location, Solid, Living, Playable, Encounterable } from './components';
+import { Drawable, Location, Solid, Living, Playable, Encounterable, Feline } from './components';
 import { componentPropertyName } from './utils';
+import { catBreeds, catGenders } from './constants';
 
 export default manager => (type, props = {}) => {
   const entity = manager.createEntity();
@@ -25,6 +26,4 @@ export const Player = [[Drawable, { character: '@', color: '#5fbcff' }], Locatio
 
 export const Wall = [[Drawable, { character: '•', color: '#ccc' }], Location, Solid];
 
-export const Cat = [[Drawable, { character: '?', color: '#f18282' }], Location, Living, [Encounterable, { image: require('../images/cats/cat.png') }]];
-
-export const randomCat = () => [[Drawable, { character: '?', color: '#f18282' }], Location, Living, [Encounterable, { image: require('../images/cats/cat.png'), name: catNames.random() }]]
+export const randomCat = () => [[Drawable, { character: '?', color: '#f18282' }], Location, Living, [Encounterable, { image: require('../images/cats/cat.png'), name: catNames.random() }], [Feline, { gender: catGenders.random(), breed: catBreeds.random() }]]

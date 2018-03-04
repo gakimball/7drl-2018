@@ -18,3 +18,8 @@ export function Encounterable() {
   this.image = null;
   this.name = 'Unknown Thing';
 }
+
+export function Feline() {
+  this.gender = 'female';
+  this.breed = 'Himalayan';
+}

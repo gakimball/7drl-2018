@@ -1,12 +1,12 @@
 import React, { Component } from 'react';
 import wait from 'wait-then';
 import Game from '../lib/game';
-import { createEmptyArray } from '../lib/utils';
 import { PLAYER_MOVED } from '../lib/events';
 import Container from './container';
 import Display from './display';
 import Player from './player';
 import Encounter from './encounter';
+import Map from './map';
 import './app.css';
 
 class App extends Component {
@@ -59,28 +59,6 @@ class App extends Component {
     }
   };
 
-  map() {
-    const map = createEmptyArray(15, 10, ' ');
-
-    this.game.getDrawableEntities().forEach(entity => {
-      const { x, y } = entity.location;
-      const { character, color } = entity.drawable;
-
-      map[y][x] = { character, color };
-    });
-
-    const player = this.game.getPlayer();
-
-    if (player) {
-      map[player.location.y][player.location.x] = {
-        character: player.drawable.character,
-        color: player.drawable.color,
-      };
-    }
-
-    return map;
-  }
-
   render() {
     const { playerWalking, ready } = this.state;
 
@@ -102,14 +80,19 @@ class App extends Component {
             height={20}
             characters={encounter ? ['', ` ${encounter.name}`] : []}
           />
-          <Display
-            border
-            x={55}
-            width={25}
-            height={12}
-            characters={this.map()}
-            debug
-          />
+          <Map
+            player={this.game.getPlayer()}
+            entities={this.game.getDrawableEntities()}
+          >{characters => (
+            <Display
+              border
+              x={55}
+              width={25}
+              height={12}
+              characters={characters}
+              debug
+            />
+          )}</Map>
           <Display
             border
             x={55}

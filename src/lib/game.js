@@ -12,6 +12,10 @@ export default class Game {
     this.createEntity = createEntityFactory(this.entities);
     this.onTick = onTick;
     this.eventLog = [];
+    this.display = {
+      text: null,
+      choices: [],
+    };
 
     document.addEventListener('keydown', this.handleKey);
   }
