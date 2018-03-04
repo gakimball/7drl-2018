@@ -4,7 +4,7 @@ import { createEmptyArray } from '../lib/utils';
 import Container from './container';
 import Display from './display';
 import Player from './player';
-import Cat from './cat';
+import Encounter from './encounter';
 import './app.css';
 
 class App extends Component {
@@ -64,7 +64,7 @@ class App extends Component {
       <div className="App">
         <Container width={80} height={30}>
           <Player key="player" walking={playerWalking} />
-          {encounter && <Cat key="cat" image={encounter.image} />}
+          {encounter && <Encounter key="cat" image={encounter.image} />}
           <Display
             x={0}
             y={0}

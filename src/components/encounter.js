@@ -1,8 +1,8 @@
 import React, { PureComponent } from 'react';
 import PropTypes from 'prop-types';
-import './cat.css';
+import './encounter.css';
 
-export default class Cat extends PureComponent {
+export default class Encounter extends PureComponent {
   static propTypes = {
     image: PropTypes.string,
   }
@@ -19,8 +19,8 @@ export default class Cat extends PureComponent {
     }
 
     return (
-      <div className="Cat">
-        <img src={image} alt="" className="Cat__image"/>
+      <div className="Encounter">
+        <img src={image} alt="" className="Encounter__image"/>
       </div>
     );
   }

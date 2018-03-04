@@ -1,4 +1,4 @@
-.Cat {
+.Encounter {
   width: 400px;
   position: absolute;
   bottom: 350px;
@@ -6,6 +6,6 @@
   z-index: 1;
 }
 
-.Cat__image {
+.Encounter__image {
   width: 100%;
 }
