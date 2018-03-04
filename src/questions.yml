@@ -1,0 +1,7 @@
+- question: I'm thinking about buying a boat. Would that be a waste of money?
+  answers:
+    - text: Yes, that would be a complete waste of money.
+      type: 3
+    - text: If a boat would make you happy, you should buy a boat!
+      type: 1
+    - text:

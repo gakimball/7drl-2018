@@ -1,0 +1,14 @@
+.Player {
+  position: absolute;
+  bottom: 77px;
+  right: 60px;
+  overflow: hidden;
+  height: 65px;
+  image-rendering: pixelated;
+  transform: scale(3);
+}
+
+.Player__image {
+  width: 179px;
+  height: 153px;
+}

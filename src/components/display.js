@@ -15,6 +15,7 @@ export default class Display extends Component {
       PropTypes.arrayOf(PropTypes.string),
     ])),
     height: PropTypes.number.isRequired,
+    render: PropTypes.node,
     width: PropTypes.number.isRequired,
     x: PropTypes.number,
     y: PropTypes.number,
@@ -23,6 +24,7 @@ export default class Display extends Component {
   static defaultProps = {
     border: true,
     characters: [],
+    render: null,
     x: 0,
     y: 0,
   }
@@ -31,6 +33,24 @@ export default class Display extends Component {
     const { border } = this.props;
 
     return boxes[border === true ? 'single' : border];
+  }
+
+  shouldComponentUpdate(nextProps) {
+    if (this.props.characters.length !== nextProps.characters.length) {
+      if (this.props.debug) console.log('Length was not the same');
+      return true;
+    }
+
+    for (const index in this.props.characters) {
+      const currentRow = [...this.props.characters[index]].join('');
+      const nextRow = [...nextProps.characters[index]].join('');
+
+      if (currentRow !== nextRow) {
+        return true;
+      }
+    }
+
+    return false;
   }
 
   getHorizontalBorder(bottom = false) {
@@ -59,15 +79,17 @@ export default class Display extends Component {
   }
 
   character(char, index) {
+    const styled = typeof char === 'object';
+
     return (
-      <div key={index} className="Display__character">
-        {char}
+      <div key={index} className="Display__character" style={{ color: char.color }}>
+        {styled ? char.character : char}
       </div>
     );
   }
 
   render() {
-    const { border, characters, height, width, x, y } = this.props;
+    const { border, characters, height, render, width, x, y } = this.props;
     const padding = border && height - characters.length - 2;
 
     return (
@@ -86,6 +108,7 @@ export default class Display extends Component {
           this.line(Array(width - 2).fill(' '), index, true),
         )}
         {border && this.line(this.getHorizontalBorder(true), -2)}
+        {render}
       </div>
     );
   }

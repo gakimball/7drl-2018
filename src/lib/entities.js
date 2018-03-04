@@ -20,6 +20,6 @@ export default manager => (type, props = {}) => {
   return entity;
 };
 
-export const Player = [[Drawable, { character: '@' }], Location, Solid, Living, Playable];
+export const Player = [[Drawable, { character: '@', color: '#5fbcff' }], Location, Solid, Living, Playable];
 
-export const Wall = [[Drawable, { character: '#' }], Location, Solid];
+export const Wall = [[Drawable, { character: '•', color: '#ccc' }], Location, Solid];

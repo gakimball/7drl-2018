@@ -1,4 +1,7 @@
-export function Drawable() {}
+export function Drawable() {
+  this.character = ' ';
+  this.color = '#fff';
+}
 
 export function Location() {
   this.x = 0;

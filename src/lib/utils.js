@@ -4,7 +4,7 @@ export function createLevel() {
   const levelWidth = 15;
   const levelHeight = 10;
   const maze = new rot.Map.EllerMaze(levelWidth, levelHeight);
-  const map = createEmptyArray(levelWidth, levelHeight);
+  const map = createEmptyArray(levelWidth, levelHeight, false);
 
   maze.create((x, y, cell) => {
     map[y][x] = cell === 1;
@@ -66,6 +66,6 @@ export function getDirectionalCoords(x, y, direction) {
   };
 }
 
-export function createEmptyArray(width, height) {
-  return Array(height).fill('').map(() => Array(width))
+export function createEmptyArray(width, height, content = false) {
+  return Array(height).fill('').map(() => Array(width).fill(content))
 }

@@ -1,0 +1,10 @@
+.Cat {
+  width: 400px;
+  position: absolute;
+  bottom: 150px;
+  right: 200px;
+}
+
+.Cat__image {
+  width: 100%;
+}
