@@ -99,5 +99,3 @@ export function createQuestion(personality) {
     })),
   };
 }
-
-console.log(createQuestion('Shy'));

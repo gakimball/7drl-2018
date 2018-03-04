@@ -34,6 +34,15 @@ export default class Game {
     };
   }
 
+  getConversationChoice() {
+    const state = this.getActiveState();
+
+    // This is lazy type detection
+    if (typeof state.next !== 'undefined') {
+      return state.choice;
+    }
+  }
+
   getControls() {
     return this.getActiveState().controls;
   }

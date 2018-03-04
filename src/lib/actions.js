@@ -60,6 +60,22 @@ export function beginCatConversation(game, cat) {
     {
       text: `You encounter ${name}, ${a} ${breed}. ${pronouns[gender]} fur looks soft and beautiful.\n\nPersonality: ${personality}`,
     },
+    {
+      text: `"My boyfriend wants us to go to Paris over the summer, but I've never been in a country where I don't speak the language, and it has me feeling apprehensive."`,
+    },
+    {
+      choices: [
+        {
+          text: 'Yes, that would be a complete waste of money.',
+        },
+        {
+          text: 'If a boat would make you happy, you should buy a boat!',
+        },
+        {
+          text: 'Only if you take me with you so we can sail off into the sunset together.',
+        },
+      ],
+    },
   ]);
 }
 
@@ -74,5 +90,23 @@ export function advanceConversation(game, state) {
 
   if (!textarea) {
     game.popState();
+  } else {
+    if (game.getTextarea().choices.length > 0) {
+      state.choice = 0;
+    } else {
+      state.choice = -1;
+    }
+  }
+}
+
+export function navigateConversation(game, state, direction) {
+  const textarea = game.getTextarea();
+
+  if (textarea.choices.length > 0) {
+    if (direction === 'up' && state.choice > 0) {
+      state.choice--;
+    } else if (direction === 'down' && state.choice < textarea.choices.length - 1) {
+      state.choice++;
+    }
   }
 }

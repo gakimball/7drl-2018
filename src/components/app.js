@@ -107,7 +107,10 @@ class App extends Component {
               characters={characters}
             />
           )}</Stats>
-          <Textarea textarea={this.game.getTextarea()}>{characters => (
+          <Textarea
+            textarea={this.game.getTextarea()}
+            selectedChoice={this.game.getConversationChoice()}
+          >{characters => (
             <Display
               border
               y={20}
