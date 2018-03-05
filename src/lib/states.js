@@ -74,7 +74,11 @@ export const TextBoxState = (game, textareas = [], onFinish = () => {}) => {
   return handler;
 }
 
-TextBoxState.controls = () => [
+TextBoxState.controls = game => [
+  ...(game.getTextarea().choices.length === 0 ? [] : [{
+    key: 'Arrows',
+    action: 'Select',
+  }]),
   {
     key: 'Space',
     action: 'Continue',

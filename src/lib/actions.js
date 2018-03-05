@@ -1,7 +1,7 @@
 import randomInt from 'random-int';
 import { Location, Playable, Encounterable, Feline, Solid } from './components';
 import { getDirectionalCoords, createQuestion, createMaze, createFloorName, createAngryCatPenalty } from './utils';
-import { Wall, Player, randomCat, HealingPotion } from './entities';
+import { Wall, Player, randomCat } from './entities';
 import { PLAYER_MOVED } from './events';
 import { FieldState, TextBoxState } from './states';
 import { catResponses, statGains, statLosses, statNames, angryCatSendoffs, angryCatPenaltyMessages, angryCatInsults, angryCatPenaltyTypes } from './constants';

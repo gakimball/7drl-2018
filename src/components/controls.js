@@ -17,6 +17,6 @@ export default class Controls extends Component {
     const { controls, children } = this.props;
     const actionText = controls.map(action => `[${action.key}] ${action.action}`);
 
-    return children([' ', ` ${actionText.join(' ')}`]);
+    return children([' ', ` ${actionText.join('  ')}`]);
   }
 }
