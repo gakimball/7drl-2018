@@ -1,7 +1,8 @@
 import catNames from 'cat-names';
-import { Drawable, Location, Solid, Living, Playable, Encounterable, Feline, Party } from './components';
+import { Drawable, Location, Solid, Living, Playable, Encounterable, Feline, Party, Item, Inventory } from './components';
 import { componentPropertyName, randomOf } from './utils';
 import { catBreeds, catGenders, catPersonalities, catClasses } from './constants';
+import { healEntity } from './actions';
 
 export default manager => (type, props = {}) => {
   const entity = manager.createEntity();
@@ -31,9 +32,11 @@ export const Player = [
   Solid,
   [Living, {
     health: 5,
+    maxHealth: 5,
   }],
   Playable,
-  Party
+  Party,
+  Inventory,
 ];
 
 export const Wall = [[Drawable, { character: '■', color: '#ccc' }], Location, Solid];
@@ -55,5 +58,15 @@ export const randomCat = () => [
     personality: randomOf(catPersonalities),
     mood: 0,
     class: randomOf(catClasses),
+  }],
+];
+
+export const HealingPotion = [
+  [Item, {
+    name: 'Healing Potion',
+    effect: (game, user) => {
+      healEntity(game, user, 2);
+    },
+    message: (game, user) => 'You recover 2 health.',
   }],
 ];

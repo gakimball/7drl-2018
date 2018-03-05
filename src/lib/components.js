@@ -12,6 +12,7 @@ export function Solid() {}
 
 export function Living() {
   this.health = 1;
+  this.maxHealth = 1;
 }
 
 export function Playable() {
@@ -19,6 +20,11 @@ export function Playable() {
   this.kindness = 0;
   this.humor = 0;
   this.seriousness = 0;
+}
+
+export function Inventory() {
+  this.limit = 2;
+  this.contents = [];
 }
 
 export function Encounterable() {
@@ -35,4 +41,10 @@ export function Feline() {
 
 export function Party() {
   this.contents = [];
+}
+
+export function Item() {
+  this.name = 'Unknown Item';
+  this.effect = () => {};
+  this.message = null;
 }

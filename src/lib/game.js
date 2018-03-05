@@ -45,7 +45,7 @@ export default class Game {
   }
 
   getControls() {
-    return this.getActiveState().controls;
+    return this.getActiveState().controls(this);
   }
 
   pushState(state, ...args) {

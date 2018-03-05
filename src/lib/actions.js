@@ -1,7 +1,7 @@
 import randomInt from 'random-int';
 import { Location, Playable, Encounterable, Feline, Solid } from './components';
 import { getDirectionalCoords, createQuestion, createMaze, createFloorName, createAngryCatPenalty } from './utils';
-import { Wall, Player, randomCat } from './entities';
+import { Wall, Player, randomCat, HealingPotion } from './entities';
 import { PLAYER_MOVED } from './events';
 import { FieldState, TextBoxState } from './states';
 import { catResponses, statGains, statLosses, statNames, angryCatSendoffs, angryCatPenaltyMessages, angryCatInsults, angryCatPenaltyTypes } from './constants';
@@ -304,6 +304,41 @@ export function damageEntity(game, entity, damage) {
   }
 }
 
+export function healEntity(game, entity, damage) {
+  entity.living.health += damage;
+
+  if (entity.living.health > entity.living.maxHealth) {
+    entity.living.health = entity.living.maxHealth;
+  }
+}
+
 export function killEntity(game, entity) {
   entity.living.health = 0;
+}
+
+export function giveItem(game, entity, item) {
+  const { inventory } = entity;
+
+  if (inventory.contents.length < inventory.limit) {
+    if (Array.isArray(item)) {
+      inventory.contents.push(game.createEntity(item));
+    } else {
+      inventory.contents.push(item);
+    }
+  }
+}
+
+export function useItem(game, entity, index) {
+  const { inventory } = entity;
+  const item = inventory.contents.splice(index, 1)[0];
+
+  item.item.effect(game, entity);
+
+  if (item.item.message !== null) {
+    startConversation(game, [{
+      text: item.item.message(game, entity),
+    }], () => {
+      item.remove();
+    });
+  }
 }

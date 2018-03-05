@@ -1,4 +1,4 @@
-import { moveEntity, advanceConversation, navigateConversation, makeConversationSelection } from './actions';
+import { moveEntity, advanceConversation, navigateConversation, makeConversationSelection, useItem } from './actions';
 
 export const FieldState = game => event => {
   const player = game.getPlayer();
@@ -17,6 +17,10 @@ export const FieldState = game => event => {
     case 'ArrowRight':
       game.runAction(moveEntity, player, 'right');
       break;
+    case '1':
+    case '2':
+      game.runAction(useItem, player, parseInt(event.key, 10) - 1);
+      break;
     default:
       handled = false;
   }
@@ -24,11 +28,15 @@ export const FieldState = game => event => {
   return handled;
 };
 
-FieldState.controls = [
+FieldState.controls = game => [
   {
     key: 'Arrows',
     action: 'Move',
   },
+  ...game.getPlayer().inventory.contents.map((item, index) => ({
+    key: index + 1,
+    action: item.item.name,
+  })),
 ];
 
 export const TextBoxState = (game, textareas = [], onFinish = () => {}) => {
@@ -66,7 +74,7 @@ export const TextBoxState = (game, textareas = [], onFinish = () => {}) => {
   return handler;
 }
 
-TextBoxState.controls = [
+TextBoxState.controls = () => [
   {
     key: 'Space',
     action: 'Continue',
