@@ -1,5 +1,5 @@
 import { EntityManager } from 'tiny-ecs';
-import { createLevel } from './actions';
+import { startGame } from './actions';
 import createEntityFactory from './entities';
 import { Drawable, Location, Playable, Encounterable, Solid } from './components';
 
@@ -60,7 +60,7 @@ export default class Game {
   }
 
   start() {
-    this.runAction(createLevel);
+    this.runAction(startGame);
   }
 
   getActiveState() {

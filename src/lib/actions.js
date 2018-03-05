@@ -6,6 +6,18 @@ import { PLAYER_MOVED } from './events';
 import { FieldState, TextBoxState } from './states';
 import { catResponses, statGains, statLosses, statNames } from './constants';
 
+export function startGame(game) {
+  createLevel(game);
+  startConversation(game, [
+    {
+      text: 'You\'ve got a party to get to, but first you have to escape this dungeon.',
+    },
+    {
+      text: 'Try making some friends along the way. Just be careful what you say to them.',
+    },
+  ]);
+}
+
 export function createLevel(game) {
   game.pushState(FieldState);
   const width = 50;
@@ -105,13 +117,12 @@ export function beginCatConversation(game, cat) {
     removeFromWorld(game, cat);
   });
 
-  continueConversation(game, cat, game.getActiveState());
+  continueCatConversation(game, cat, game.getActiveState());
 }
 
-export function continueConversation(game, cat, state) {
+export function continueCatConversation(game, cat, state) {
   const { name } = cat.encounterable;
   const { personality } = cat.feline;
-  const player = game.getPlayer();
 
   state.push(...createQuestion(personality, (state, choice) => {
     const { type } = choice;
@@ -142,36 +153,43 @@ export function continueConversation(game, cat, state) {
 
     deductCatQuestion(game, cat);
 
-    if (cat.feline.questionsAsked < 3) {
-      continueConversation(game, cat, state);
+    if (cat.feline.questionsAsked > 2 || cat.feline.mood > 1) {
+      finishCatConversation(game, cat, state);
     } else {
-      if (cat.feline.mood >= 2) {
-        state.push({
-          text: `${name} seems happy with you.`,
-        });
-        state.push({
-          text: `"Are you headed to the party? I'm coming with you. You look like you could use a ${cat.feline.class} in your gang."`,
-        });
-        state.push({
-          text: `${name} joins your party.`,
-          onReveal: () => addToParty(game, player, cat),
-        });
-      } else if (cat.feline.mood >= 0) {
-        state.push({
-          text: `${name} seems unimpressed with you.`,
-        });
-      } else {
-        state.push({
-          text: `${name} seems annoyed with you.`,
-        });
-      }
+      continueCatConversation(game, cat, state);
     }
 
     advanceConversation(game, state);
   }));
 }
 
-export function startConversation(game, queue, onFinish) {
+export function finishCatConversation(game, cat, state) {
+  const { name } = cat.encounterable;
+  const player = game.getPlayer();
+
+  if (cat.feline.mood >= 1) {
+    state.push({
+      text: `${name} seems happy with you.`,
+    });
+    state.push({
+      text: `"Are you headed to the party? I'm coming with you. You look like you could use a ${cat.feline.class} in your gang."`,
+    });
+    state.push({
+      text: `${name} joins your party.`,
+      onReveal: () => addToParty(game, player, cat),
+    });
+  } else if (cat.feline.mood >= 0) {
+    state.push({
+      text: `${name} seems unimpressed with you.`,
+    });
+  } else {
+    state.push({
+      text: `${name} seems annoyed with you.`,
+    });
+  }
+}
+
+export function startConversation(game, queue, onFinish = () => {}) {
   const state = game.pushState(TextBoxState, queue, onFinish);
   advanceConversation(game, state);
 }
