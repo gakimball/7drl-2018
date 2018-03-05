@@ -10,10 +10,11 @@ export function Location() {
 
 export function Solid() {}
 
-export function Living() {}
+export function Living() {
+  this.health = 1;
+}
 
 export function Playable() {
-  this.life = 5;
   this.weirdness = 0;
   this.kindness = 0;
   this.humor = 0;

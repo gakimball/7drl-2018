@@ -71,6 +71,7 @@ class App extends Component {
 
     const player = this.game.getPlayer();
     const encounter = this.game.getCurrentEncounter();
+    const floor = `Floor ${this.game.floor}: ${this.game.floorName}`;
 
     return (
       <div className="App">
@@ -82,7 +83,7 @@ class App extends Component {
             y={0}
             width={55}
             height={20}
-            characters={encounter ? ['', ` ${encounter.name}`] : []}
+            characters={['', ` ${encounter ? encounter.name : floor}`]}
           />
           <Map
             player={player}

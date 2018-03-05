@@ -11,6 +11,8 @@ export default class Game {
     this.eventLog = [];
     this.textarea = null;
     this.states = [];
+    this.floor = 0;
+    this.floorName = null;
 
     document.addEventListener('keydown', this.handleKey);
   }

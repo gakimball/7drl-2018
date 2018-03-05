@@ -1,7 +1,7 @@
 import rot from 'rot-js';
 import randomInt from 'random-int';
 import arrayShuffle from 'array-shuffle';
-import { responseTypes, catResponses } from './constants';
+import { responseTypes, catResponses, floorNames, angryCatPenaltyProbabilities } from './constants';
 import questions from './questions';
 
 export function createMaze(width, height) {
@@ -112,4 +112,23 @@ export function createQuestion(personality, onChoice) {
       onChoice,
     },
   ];
+}
+
+export function createFloorName() {
+  const { names, descriptors } = floorNames;
+
+  return `${randomOf(names)} of ${randomOf(descriptors)}`;
+}
+
+export function createAngryCatPenalty() {
+  const diceRoll = randomInt(1, 100);
+  let baseProbability = 0;
+
+  for (const [outcome, probability] of Object.entries(angryCatPenaltyProbabilities)) {
+    baseProbability += probability;
+
+    if (diceRoll <= baseProbability) {
+      return outcome;
+    }
+  }
 }

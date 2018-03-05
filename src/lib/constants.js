@@ -177,3 +177,80 @@ export const catClasses = {
   Illusionist: 'Illusionist',
   Tactician: 'Tactician',
 };
+
+export const angryCatSendoffs = {
+  [catPersonalities.Dreary]: 'I\'m a fragile bird. Please go away. I\'ll tell you a secret: to win the heart of a dreary, oddball cat, you have to be an oddball yourself. Be weird.',
+  [catPersonalities.Shy]: 'Why are you so mean?! Can\'t you be nicer? Making friends is hard enough as it is. Be kind to others.',
+  [catPersonalities.Aloof]: 'You need to chill out, friend. Don\'t be so serious all the time. Live on the lighter side of life and be funny.',
+  [catPersonalities.Angsty]: 'Ugh, you are the worst. Why can\'t people just say what they\'re thinking? Be serious.',
+}
+
+export const angryCatPenaltyTypes = {
+  Attack: 'Attack',
+  Insult: 'Insult',
+  Steal: 'Steal',
+};
+
+export const angryCatPenaltyProbabilities = {
+  [angryCatPenaltyTypes.Attack]: 50,
+  [angryCatPenaltyTypes.Insult]: 25,
+  [angryCatPenaltyTypes.Steal]: 25,
+};
+
+export const angryCatPenaltyMessages = {
+  [angryCatPenaltyTypes.Attack]: '%s swipes at you. You take %s damage.',
+  [angryCatPenaltyTypes.Insult]: '%s %s. You lose -1 %s.',
+  [angryCatPenaltyTypes.Steal]: '%s steals your %s.',
+};
+
+export const angryCatInsults = {
+  seriousness: 'opens your mind to the existence of chemtrails',
+  kindness: 'threatens to close down the local community center',
+  humor: 'lectures you on the rise of facism',
+  weirdness: 'connects with you telepathically and sets your ego on fire',
+};
+
+export const floorNames = {
+  names: [
+    'Palace',
+    'Floor',
+    'Hall',
+    'Place',
+    'Sandbox',
+    'Castle',
+    'Lair',
+    'Building',
+    'Bulding',
+    'Playground',
+    'Keep',
+    'Dungeon',
+    'Jail',
+    'Prison',
+    'Labrynth',
+  ],
+  descriptors: [
+    'Happyness',
+    'Sadness',
+    'Angst',
+    'Absurdity',
+    'Pleasure',
+    'Death',
+    'Life',
+    'Existential Crises',
+    'Breakfast',
+    'Eggplants',
+    'Cats',
+    'Kittens',
+    'Relationships',
+    'Authoritarianism',
+    'Biting',
+    'People You Can\'t Unfriend',
+    'Parties',
+    'Birthdays',
+    'the Full Moon',
+    'the Half Moon',
+    'the Cat\'s Meow',
+    'the Eternal September',
+    'the Cat',
+  ],
+};

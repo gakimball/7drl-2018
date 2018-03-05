@@ -17,7 +17,7 @@ export default class Stats extends Component {
     const classes = Object.keys(catClasses);
     const characters = [
       '',
-      `Life: ${player.playable.life}`,
+      `Life: ${player.living.health}`,
       '',
       `Kindness: ${player.playable.kindness}`,
       `Humor: ${player.playable.humor}`,

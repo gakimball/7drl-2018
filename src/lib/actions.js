@@ -1,13 +1,13 @@
 import randomInt from 'random-int';
 import { Location, Playable, Encounterable, Feline, Solid } from './components';
-import { getDirectionalCoords, createQuestion, createMaze } from './utils';
+import { getDirectionalCoords, createQuestion, createMaze, createFloorName, createAngryCatPenalty } from './utils';
 import { Wall, Player, randomCat } from './entities';
 import { PLAYER_MOVED } from './events';
 import { FieldState, TextBoxState } from './states';
-import { catResponses, statGains, statLosses, statNames } from './constants';
+import { catResponses, statGains, statLosses, statNames, angryCatSendoffs, angryCatPenaltyMessages, angryCatInsults, angryCatPenaltyTypes } from './constants';
 
 export function startGame(game) {
-  createLevel(game);
+  createLevel(game, 1);
   startConversation(game, [
     {
       text: 'You\'ve got a party to get to, but first you have to escape this dungeon.',
@@ -18,8 +18,10 @@ export function startGame(game) {
   ]);
 }
 
-export function createLevel(game) {
+export function createLevel(game, floor) {
   game.pushState(FieldState);
+  game.floor = floor;
+  game.floorName = createFloorName();
   const width = 50;
   const height = 50;
 
@@ -47,8 +49,10 @@ export function createLevel(game) {
     }
   }
 
-  // Create player
-  createAtRandom(Player);
+  if (floor === 1) {
+    // Create player
+    createAtRandom(Player);
+  }
 
   // Create cats
   for (let i = 0; i < 20; i++) {
@@ -153,7 +157,7 @@ export function continueCatConversation(game, cat, state) {
 
     deductCatQuestion(game, cat);
 
-    if (cat.feline.questionsAsked > 2 || cat.feline.mood > 1) {
+    if (cat.feline.questionsAsked > 2 || cat.feline.mood > 1 || cat.feline.mood < -1) {
       finishCatConversation(game, cat, state);
     } else {
       continueCatConversation(game, cat, state);
@@ -164,6 +168,7 @@ export function continueCatConversation(game, cat, state) {
 }
 
 export function finishCatConversation(game, cat, state) {
+  const { personality } = cat.feline;
   const { name } = cat.encounterable;
   const player = game.getPlayer();
 
@@ -186,7 +191,53 @@ export function finishCatConversation(game, cat, state) {
     state.push({
       text: `${name} seems annoyed with you.`,
     });
+    state.push({
+      text: `"${angryCatSendoffs[personality]}"`,
+    });
+    penalizePlayer(game, cat, state);
   }
+}
+
+export function penalizePlayer(game, cat, state) {
+  const player = game.getPlayer();
+  const { name } = cat.encounterable;
+  const penalty = createAngryCatPenalty();
+  const messageTemplate = angryCatPenaltyMessages[penalty];
+  let messageText;
+  let onReveal = () => {};
+
+  switch (penalty) {
+    case angryCatPenaltyTypes.Attack: {
+      messageText = messageTemplate
+        .replace('%s', name)
+        .replace('%s', 1);
+      onReveal = () => damageEntity(game, player, 1);
+      break;
+    }
+    case angryCatPenaltyTypes.Insult: {
+      const insults = angryCatInsults;
+      const stats = Object.keys(insults);
+      const stat = stats[randomInt(stats.length - 1)];
+
+      messageText = messageTemplate
+        .replace('%s', name)
+        .replace('%s', angryCatInsults[stat])
+        .replace('%s', statNames[stat]);
+      onReveal = () => adjustPlayerStats(game, stat, -1);
+
+      break;
+    }
+    case angryCatPenaltyTypes.Steal: {
+      messageText = `${name} tries to steal from you, but you have nothing to steal.`;
+      break;
+    }
+    default:
+  }
+
+  state.push({
+    text: messageText,
+    onReveal,
+  });
 }
 
 export function startConversation(game, queue, onFinish = () => {}) {
@@ -243,4 +294,16 @@ export function deductCatQuestion(game, cat) {
 
 export function addToParty(game, entity, member) {
   entity.party.contents.push(member);
+}
+
+export function damageEntity(game, entity, damage) {
+  entity.living.health -= damage;
+
+  if (entity.living.health <= 0) {
+    killEntity(game, entity);
+  }
+}
+
+export function killEntity(game, entity) {
+  entity.living.health = 0;
 }

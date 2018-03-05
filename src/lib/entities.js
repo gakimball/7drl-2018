@@ -22,7 +22,19 @@ export default manager => (type, props = {}) => {
   return entity;
 };
 
-export const Player = [[Drawable, { character: '@', color: '#5fbcff' }], Location, Solid, Living, Playable, Party];
+export const Player = [
+  [Drawable, {
+    character: '@',
+    color: '#5fbcff'
+  }],
+  Location,
+  Solid,
+  [Living, {
+    health: 5,
+  }],
+  Playable,
+  Party
+];
 
 export const Wall = [[Drawable, { character: '■', color: '#ccc' }], Location, Solid];
 
