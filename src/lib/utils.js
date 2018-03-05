@@ -93,7 +93,7 @@ export function createQuestion(personality, onChoice) {
     questionsUsed.length = 0;
   }
 
-  const question = questionsUnused.splice(randomInt(questionsUsed.length - 1), 1)[0];
+  const question = questionsUnused.splice(randomInt(questionsUnused.length - 1), 1)[0];
   questionsUsed.push(question)
   const response = catResponses[personality];
   const options = Object.values(responseTypes).filter(r => r !== response.likes);
