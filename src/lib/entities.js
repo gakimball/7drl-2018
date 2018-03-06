@@ -2,7 +2,7 @@ import catNames from 'cat-names';
 import { Drawable, Location, Solid, Living, Playable, Encounterable, Feline, Party, Item, Inventory } from './components';
 import { componentPropertyName, randomOf } from './utils';
 import { catBreeds, catGenders, catPersonalities, catClasses } from './constants';
-import { healEntity } from './actions';
+import { healEntity, initiateCatClassChange } from './actions';
 
 export default manager => (type, props = {}) => {
   const entity = manager.createEntity();
@@ -70,3 +70,12 @@ export const HealingPotion = [
     message: (game, user) => 'You recover 2 health.',
   }],
 ];
+
+export const CatSkillbook = [
+  [Item, {
+    name: 'Cat Skillbook',
+    effect: (game) => {
+      return initiateCatClassChange(game);
+    },
+  }]
+]

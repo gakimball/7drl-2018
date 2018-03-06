@@ -1,10 +1,11 @@
 import randomInt from 'random-int';
+import arrayShuffle from 'array-shuffle';
 import { Location, Playable, Encounterable, Feline, Solid } from './components';
 import { getDirectionalCoords, createQuestion, createMaze, createFloorName, createAngryCatPenalty } from './utils';
-import { Wall, Player, randomCat } from './entities';
+import { Wall, Player, randomCat, CatSkillbook } from './entities';
 import { PLAYER_MOVED } from './events';
 import { FieldState, TextBoxState } from './states';
-import { catResponses, statGains, statLosses, statNames, angryCatSendoffs, angryCatPenaltyMessages, angryCatInsults, angryCatPenaltyTypes } from './constants';
+import { catResponses, statGains, statLosses, statNames, angryCatSendoffs, angryCatPenaltyMessages, angryCatInsults, angryCatPenaltyTypes, catClasses, pronouns } from './constants';
 
 export function startGame(game) {
   createLevel(game, 1);
@@ -41,9 +42,9 @@ export function createLevel(game, floor) {
     const y = randomInt(height - 1);
 
     if (game.getEntitiesAtLocation(x, y).length > 0) {
-      createAtRandom(entity);
+      return createAtRandom(entity);
     } else {
-      game.createEntity(entity, {
+      return game.createEntity(entity, {
         location: { x, y },
       });
     }
@@ -52,11 +53,14 @@ export function createLevel(game, floor) {
   if (floor === 1) {
     // Create player
     createAtRandom(Player);
+
+    // DEBUG
+    giveItem(game, game.getPlayer(), CatSkillbook);
   }
 
   // Create cats
   for (let i = 0; i < 20; i++) {
-    createAtRandom(randomCat());
+    addToParty(game, game.getPlayer(), createAtRandom(randomCat()));
   }
 }
 
@@ -104,11 +108,6 @@ export function beginEncounter(game, encounter) {
 }
 
 export function beginCatConversation(game, cat) {
-  const pronouns = {
-    female: 'Her',
-    male: 'His',
-    nonbinary: 'Their',
-  };
   const { name } = cat.encounterable;
   const { gender, breed, personality } = cat.feline;
   const a = char => char.toLowerCase()[0] === 'a' ? 'an' : 'a';
@@ -330,9 +329,14 @@ export function giveItem(game, entity, item) {
 
 export function useItem(game, entity, index) {
   const { inventory } = entity;
-  const item = inventory.contents.splice(index, 1)[0];
+  const item = inventory.contents[index];
+  const used = item.item.effect(game, entity);
 
-  item.item.effect(game, entity);
+  if (used === false) {
+    return;
+  }
+
+  inventory.contents.splice(index, 1);
 
   if (item.item.message !== null) {
     startConversation(game, [{
@@ -341,4 +345,69 @@ export function useItem(game, entity, index) {
       item.remove();
     });
   }
+}
+
+export function initiateCatClassChange(game) {
+  const classes = game.getPlayerParty().reduce((arr, cat) => {
+    if (arr.includes(cat.feline.class)) {
+      return arr;
+    }
+
+    return arr.concat([cat.feline.class]);
+  }, []);
+
+  if (classes.length === 0) {
+    startConversation(game, [{
+      text: 'You have no friends yet.'
+    }], () => game.tick());
+    return false;
+  }
+
+  let oldClass;
+
+  startConversation(game, [
+    {
+      text: 'Select a class of cat to convert.',
+    },
+    {
+      choices: classes.map(cls => ({ text: cls })),
+      onChoice: pickClassChange,
+    }
+  ]);
+
+  function pickClassChange(state, choice) {
+    oldClass = choice.text;
+    const newClasses = arrayShuffle(Object.keys(catClasses).filter(cls => cls !== oldClass)).slice(0, 3);
+
+    state.push({
+      text: `Select a new class for your ${oldClass}.`,
+    });
+    state.push({
+      choices: newClasses.map(cls => ({
+        text: cls,
+      })),
+      onChoice: confirmClassChange,
+    });
+
+    advanceConversation(game, state);
+  }
+
+  function confirmClassChange(state, choice) {
+    const newClass = choice.text;
+    const cats = game.getPlayerParty().filter(cat => cat.feline.class === oldClass);
+    const cat = cats[randomInt(0, cats.length - 1)];
+    const { name } = cat.encounterable;
+    const { gender } = cat.feline;
+
+    state.push({
+      text: `${name} the ${oldClass} is now ${name} the ${newClass}. ${pronouns[gender]} fur still looks soft and beautiful.`,
+      onReveal: () => changeCatClass(game, cat, newClass),
+    });
+
+    advanceConversation(game, state);
+  }
+}
+
+export function changeCatClass(game, cat, newClass) {
+  cat.feline.class = newClass;
 }

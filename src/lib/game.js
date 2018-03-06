@@ -1,7 +1,7 @@
 import { EntityManager } from 'tiny-ecs';
 import { startGame } from './actions';
 import createEntityFactory from './entities';
-import { Drawable, Location, Playable, Encounterable, Solid } from './components';
+import { Drawable, Location, Playable, Encounterable, Solid, Feline } from './components';
 
 export default class Game {
   constructor(onTick = () => {}) {
@@ -15,6 +15,14 @@ export default class Game {
     this.floorName = null;
 
     document.addEventListener('keydown', this.handleKey);
+  }
+
+  getPlayerParty() {
+    const player = this.getPlayer();
+
+    return this.entities
+      .queryComponents([Feline])
+      .filter(cat => player.party.contents.includes(cat));
   }
 
   getTextarea() {

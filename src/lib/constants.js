@@ -254,3 +254,9 @@ export const floorNames = {
     'the Cat',
   ],
 };
+
+export const pronouns = {
+  female: 'Her',
+  male: 'His',
+  nonbinary: 'Their',
+};
