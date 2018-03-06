@@ -1,8 +1,8 @@
 import randomInt from 'random-int';
 import arrayShuffle from 'array-shuffle';
-import { Location, Playable, Encounterable, Feline, Solid } from './components';
+import { Location, Playable, Encounterable, Feline, Solid, Alluring } from './components';
 import { getDirectionalCoords, createQuestion, createMaze, createFloorName, createAngryCatPenalty } from './utils';
-import { Wall, Player, randomCat, CatSkillbook } from './entities';
+import { Wall, Player, randomCat, CatSkillbook, Catnip } from './entities';
 import { PLAYER_MOVED } from './events';
 import { FieldState, TextBoxState } from './states';
 import { catResponses, statGains, statLosses, statNames, angryCatSendoffs, angryCatPenaltyMessages, angryCatInsults, angryCatPenaltyTypes, catClasses, pronouns } from './constants';
@@ -56,11 +56,13 @@ export function createLevel(game, floor) {
 
     // DEBUG
     giveItem(game, game.getPlayer(), CatSkillbook);
+    giveItem(game, game.getPlayer(), Catnip);
   }
 
   // Create cats
   for (let i = 0; i < 20; i++) {
-    addToParty(game, game.getPlayer(), createAtRandom(randomCat()));
+    createAtRandom(randomCat());
+    // addToParty(game, game.getPlayer(), createAtRandom(randomCat()));
   }
 }
 
@@ -120,7 +122,12 @@ export function beginCatConversation(game, cat) {
     removeFromWorld(game, cat);
   });
 
-  continueCatConversation(game, cat, game.getActiveState());
+  if (game.getPlayer().hasComponent(Alluring)) {
+    adjustCatMood(game, cat, 10);
+    finishCatConversation(game, cat, game.getActiveState());
+  } else {
+    continueCatConversation(game, cat, game.getActiveState());
+  }
 }
 
 export function continueCatConversation(game, cat, state) {
@@ -410,4 +417,21 @@ export function initiateCatClassChange(game) {
 
 export function changeCatClass(game, cat, newClass) {
   cat.feline.class = newClass;
+}
+
+export function applyCatnip(game) {
+  const player = game.getPlayer();
+
+  if (player.hasComponent(Alluring)) {
+    startConversation(game, [{
+      text: 'You\'ve already used catnip recently. You can\'t get any more alluring.',
+    }]);
+
+    return false;
+  }
+
+  player.addComponent(Alluring);
+  startConversation(game, [{
+    text: 'You sprinkle catnip on yourself. The next cat you meet will probably really like you.',
+  }]);
 }

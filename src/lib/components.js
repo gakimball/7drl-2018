@@ -48,3 +48,5 @@ export function Item() {
   this.effect = () => {};
   this.message = null;
 }
+
+export function Alluring() {}

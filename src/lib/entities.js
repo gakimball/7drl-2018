@@ -2,7 +2,7 @@ import catNames from 'cat-names';
 import { Drawable, Location, Solid, Living, Playable, Encounterable, Feline, Party, Item, Inventory } from './components';
 import { componentPropertyName, randomOf } from './utils';
 import { catBreeds, catGenders, catPersonalities, catClasses } from './constants';
-import { healEntity, initiateCatClassChange } from './actions';
+import { healEntity, initiateCatClassChange, applyCatnip } from './actions';
 
 export default manager => (type, props = {}) => {
   const entity = manager.createEntity();
@@ -79,3 +79,12 @@ export const CatSkillbook = [
     },
   }]
 ]
+
+export const Catnip = [
+  [Item, {
+    name: 'Catnip',
+    effect: (game, user) => {
+      return applyCatnip(game);
+    },
+  }]
+];
