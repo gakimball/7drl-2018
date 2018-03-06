@@ -50,3 +50,7 @@ export function Item() {
 }
 
 export function Alluring() {}
+
+export function Gang() {
+  this.name = 'Tuffbois';
+}

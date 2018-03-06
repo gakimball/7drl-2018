@@ -1,11 +1,11 @@
 import randomInt from 'random-int';
 import arrayShuffle from 'array-shuffle';
 import { Location, Playable, Encounterable, Feline, Solid, Alluring } from './components';
-import { getDirectionalCoords, createQuestion, createMaze, createFloorName, createAngryCatPenalty } from './utils';
-import { Wall, Player, randomCat, CatSkillbook, Catnip } from './entities';
+import { getDirectionalCoords, createQuestion, createMaze, createFloorName, createAngryCatPenalty, randomOf } from './utils';
+import { Wall, Player, randomCat, BookOfHints, Catnip } from './entities';
 import { PLAYER_MOVED } from './events';
 import { FieldState, TextBoxState } from './states';
-import { catResponses, statGains, statLosses, statNames, angryCatSendoffs, angryCatPenaltyMessages, angryCatInsults, angryCatPenaltyTypes, catClasses, pronouns } from './constants';
+import { catResponses, statGains, statLosses, statNames, angryCatSendoffs, angryCatPenaltyMessages, angryCatInsults, angryCatPenaltyTypes, catClasses, pronouns, smells, hints } from './constants';
 
 export function startGame(game) {
   createLevel(game, 1);
@@ -55,7 +55,7 @@ export function createLevel(game, floor) {
     createAtRandom(Player);
 
     // DEBUG
-    giveItem(game, game.getPlayer(), CatSkillbook);
+    giveItem(game, game.getPlayer(), BookOfHints);
     giveItem(game, game.getPlayer(), Catnip);
   }
 
@@ -434,4 +434,18 @@ export function applyCatnip(game) {
   startConversation(game, [{
     text: 'You sprinkle catnip on yourself. The next cat you meet will probably really like you.',
   }]);
+}
+
+export function giveHint(game) {
+  startConversation(game, [
+    {
+      text: `You open the Book of Hints. It smells like ${randomOf(smells)}. The first page reads:`,
+    },
+    {
+      text: `"${randomOf(hints)}"`,
+    },
+    {
+      text: 'As you turn the page, the book vanishes into a puff of smoke. Typical.',
+    },
+  ]);
 }

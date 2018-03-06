@@ -260,3 +260,32 @@ export const pronouns = {
   male: 'His',
   nonbinary: 'Their',
 };
+
+export const hints = [
+  'Cats with an angsty personality want you to be straight with them. Give them serious, no-nonsense answers to questions.',
+  'Cats with an aloof personality want you to joke around with them. Give them funny, absurd answers to questions.',
+  'Cats with a dreary personality are on the esoteric side. Give them strange answers and non-sequiters.',
+  'Cats with a shy personality are sensitive. Show them empathy by giving kind answers to questions.',
+  'In battle, a Warrior cat can deal damage to the enemy gang. However, a Warrior\'s attacks can be blocked by an opposing Defender.',
+  'In battle, a Defender cat can reduce incoming damage to allies from the incoming gang. They have high HP, but they take the full amount of damage themselves.',
+  'In battle, a Wizard cat can cast spells that deal damage to the enemy gang, ignoring any enemy Defenders. However, they have the lowest HP of any front line class.',
+  'In battle, an Illusionist can cast spells to help your gang or harm the enemy gang. These cats are absent-minded, so the spell they cast is completely random.',
+  'In battle, a Cleric cat can heal your gang. The healing happens before the enemy gang attacks, so make sure you don\'t kill your healer in the process.',
+  'In battle, a Tactician cannot be assigned to the front lines. Instead, merely having them in your gang adds an extra slot to your front line.',
+  'Burn (Illusionist spell): applies a burn effect to the enemy gang. Each turn, they have a chance to take 1 damage at the end of the round, even if they\'ve retreated.',
+  'Sleep (Illusionist spell): lulls the enemy gang into a catnap. The enemy\'s front line won\'t change next turn.',
+  'Barrier (Illusionist spell): mitigates 1 damage of any type against your gang next turn.',
+  'Energize (Illusionist spell): next turn, the cat in the top slot of your gang\'s front line will act twice or have double the normal effect.',
+];
+
+export const smells = [
+  'a greasy ankle',
+  'a garish frown',
+  'an aged banana',
+  'burning flesh',
+  'wet sheets',
+  'an old car engine',
+  'an elderly man\'s memories',
+  'a dying snake',
+  'a powerful musk ox',
+];
