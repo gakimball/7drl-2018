@@ -71,6 +71,16 @@ export const HealingPotion = [
   }],
 ];
 
+export const SuperHealingPotion = [
+  [Item, {
+    name: 'Super Healing Potion',
+    effect: (game, user) => {
+      healEntity(game, user, 5);
+    },
+    message: (game, user) => 'You recover 5 health.',
+  }],
+];
+
 export const CatSkillbook = [
   [Item, {
     name: 'Cat Skillbook',
