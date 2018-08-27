@@ -13,8 +13,30 @@ export default class Game {
     this.states = [];
     this.floor = 0;
     this.floorName = null;
+    this.gangBattleInProgess = false;
 
     document.addEventListener('keydown', this.handleKey);
+  }
+
+  getGangs() {
+    const battleState = this.states.filter(s => typeof s.getGang === 'function')[0];
+
+    if (!battleState) {
+      return null;
+    }
+
+    return {
+      party: {
+        friendly: this.getPlayer().party.contents,
+        enemy: battleState.getGang().party.contents,
+      },
+      slots: battleState.slots,
+      damage: battleState.calculateDamage(),
+      menu: {
+        choice: battleState.choice,
+        page: battleState.page,
+      },
+    };
   }
 
   getPlayerParty() {
@@ -53,7 +75,13 @@ export default class Game {
   }
 
   getControls() {
-    return this.getActiveState().controls(this);
+    const { controls } = this.getActiveState();
+
+    if (controls) {
+      return controls(this);
+    }
+
+    return [];
   }
 
   pushState(state, ...args) {

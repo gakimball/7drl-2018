@@ -1,3 +1,5 @@
+import { uuid } from './utils';
+
 export function Drawable() {
   this.character = ' ';
   this.color = '#fff';
@@ -37,6 +39,7 @@ export function Feline() {
   this.breed = 'Himalayan';
   this.mood = 0;
   this.questionsAsked = 0;
+  this.id = uuid();
 }
 
 export function Party() {

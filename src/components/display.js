@@ -75,7 +75,7 @@ export default class Display extends Component {
 
   line(line, index, edge) {
     const { border, width } = this.props;
-    const padding = border && width - line.length - 2;
+    const padding = border && Math.max(width - line.length - 2, -100);
 
     return (
       <div key={index} className="Display__line">

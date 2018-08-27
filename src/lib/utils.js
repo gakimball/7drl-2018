@@ -1,7 +1,8 @@
 import rot from 'rot-js';
 import randomInt from 'random-int';
 import arrayShuffle from 'array-shuffle';
-import { responseTypes, catResponses, floorNames, angryCatPenaltyProbabilities } from './constants';
+import dotProp from 'dot-prop';
+import { responseTypes, catResponses, floorNames, angryCatPenaltyProbabilities, catClasses } from './constants';
 import questions from './questions';
 
 export function createMaze(width, height) {
@@ -131,4 +132,71 @@ export function createAngryCatPenalty() {
       return outcome;
     }
   }
+}
+
+export function calculateDamage(player, enemy) {
+  return {
+    friendly: calculateDamageDealtBy(player, enemy),
+    enemy: calculateDamageDealtBy(enemy, player),
+  };
+}
+
+export function calculateDamageDealtBy(source, target) {
+  // Damage types
+  const Damage = {
+    Physical: 'Physical',
+    Magic: 'Magic',
+  };
+
+  const damageDealt = source.reduce((damage, cat) => {
+    if (cat === null) {
+      return damage;
+    }
+
+    switch (cat.feline.class) {
+      case catClasses.Warrior:
+        return damage.concat([Damage.Physical]);
+      case catClasses.Wizard:
+        return damage.concat([Damage.Magic]);
+      default:
+        return damage;
+    }
+  }, []);
+
+  const finalDamage = target.reduce((damage, cat) => {
+    if (cat === null) {
+      return damage;
+    }
+
+    if (cat.feline.class === catClasses.Defender) {
+      const index = damage.indexOf(Damage.Physical);
+
+      if (index > -1) {
+        return damage.splice(index, 1);
+      }
+
+      return damage;
+    }
+
+    return damage;
+  }, damageDealt);
+
+  return finalDamage.length;
+}
+
+export function alphabetizeBy(prop) {
+  return (a, b) => {
+    const valueA = dotProp.get(a, prop).toUpperCase();
+    const valueB = dotProp.get(b, prop).toUpperCase();
+
+    if (valueA < valueB) return -1;
+    if (valueA > valueB) return 1;
+    return 0;
+  };
+}
+
+export function uuid() {
+  const length = 6;
+
+  return Math.round((Math.pow(36, length + 1) - Math.random() * Math.pow(36, length))).toString(36).slice(1);
 }

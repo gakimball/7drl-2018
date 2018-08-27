@@ -1,7 +1,7 @@
 import catNames from 'cat-names';
 import { Drawable, Location, Solid, Living, Playable, Encounterable, Feline, Party, Item, Inventory } from './components';
 import { componentPropertyName, randomOf } from './utils';
-import { catBreeds, catGenders, catPersonalities, catClasses } from './constants';
+import { catBreeds, catGenders, catPersonalities, catClasses, catClassMaxHealth } from './constants';
 import { healEntity, initiateCatClassChange, applyCatnip, giveHint } from './actions';
 
 export default manager => (type, props = {}) => {
@@ -41,25 +41,35 @@ export const Player = [
 
 export const Wall = [[Drawable, { character: '■', color: '#ccc' }], Location, Solid];
 
-export const randomCat = () => [
-  [Drawable, {
-    character: '?',
-    color: '#f18282',
-  }],
-  Location,
-  Living,
-  [Encounterable, {
-    image: require('../images/cats/cat.png'),
-    name: catNames.random(),
-  }],
-  [Feline, {
-    gender: randomOf(catGenders),
-    breed: randomOf(catBreeds),
-    personality: randomOf(catPersonalities),
-    mood: 0,
-    class: randomOf(catClasses),
-  }],
-];
+export const randomCat = () => {
+  const cls = randomOf(catClasses);
+  const health = catClassMaxHealth[cls];
+
+  return [
+    [Drawable, {
+      character: '?',
+      color: '#f18282',
+    }],
+    Location,
+    [Living, {
+      health,
+      maxHealth: health,
+    }],
+    [Encounterable, {
+      image: require('../images/cats/cat.png'),
+      name: catNames.random(),
+    }],
+    [Feline, {
+      gender: randomOf(catGenders),
+      breed: randomOf(catBreeds),
+      personality: randomOf(catPersonalities),
+      mood: 0,
+      class: cls,
+    }],
+  ];
+};
+
+export const EnemyGang = [Party];
 
 export const HealingPotion = [
   [Item, {

@@ -1,11 +1,13 @@
 import randomInt from 'random-int';
 import arrayShuffle from 'array-shuffle';
 import { Location, Playable, Encounterable, Feline, Solid, Alluring } from './components';
-import { getDirectionalCoords, createQuestion, createMaze, createFloorName, createAngryCatPenalty, randomOf } from './utils';
-import { Wall, Player, randomCat, BookOfHints, Catnip } from './entities';
+import { getDirectionalCoords, createQuestion, createMaze, createFloorName, createAngryCatPenalty, randomOf, alphabetizeBy } from './utils';
+import { Wall, Player, randomCat, BookOfHints, Catnip, EnemyGang } from './entities';
 import { PLAYER_MOVED } from './events';
-import { FieldState, TextBoxState } from './states';
+import { FieldState, TextBoxState, GangBattleState } from './states';
 import { catResponses, statGains, statLosses, statNames, angryCatSendoffs, angryCatPenaltyMessages, angryCatInsults, angryCatPenaltyTypes, catClasses, pronouns, smells, hints } from './constants';
+
+const alphabetize = alphabetizeBy('encounterable.name');
 
 export function startGame(game) {
   createLevel(game, 1);
@@ -61,9 +63,10 @@ export function createLevel(game, floor) {
 
   // Create cats
   for (let i = 0; i < 20; i++) {
-    createAtRandom(randomCat());
-    // addToParty(game, game.getPlayer(), createAtRandom(randomCat()));
+    addToParty(game, game.getPlayer(), createAtRandom(randomCat()));
   }
+
+  startGangBattle(game);
 }
 
 // Move an entity one square in a direction
@@ -448,4 +451,128 @@ export function giveHint(game) {
       text: 'As you turn the page, the book vanishes into a puff of smoke. Typical.',
     },
   ]);
+}
+
+export function startGangBattle(game) {
+  game.gangBattleInProgess = true;
+
+  const gang = game.createEntity(EnemyGang);
+  const playerGangSize = game.getPlayer().party.contents.length;
+  const percentages = [0.5, 0.75, 1, 1.25, 1.5, 1.75, 2];
+  const enemyGangSize = Math.floor(playerGangSize * percentages[game.floor]);
+
+  for (let i = 0; i < enemyGangSize; i++) {
+    gang.party.contents.push(game.createEntity(randomCat()));
+  }
+
+  const handler = game.pushState(GangBattleState, gang);
+
+  startGangBattleTurn(game, handler);
+}
+
+export function startGangBattleTurn(game, handler) {
+  setEnemyBattleSlots(game, handler);
+}
+
+export function setEnemyBattleSlots(game, handler) {
+  const side = 'enemy';
+  const cats = [...handler.getGang().party.contents.filter(c => c.feline.class !== catClasses.Tactician)];
+
+  [0, 1, 2].forEach(slot => {
+    const index = randomInt(cats.length - 1);
+    const cat = cats.splice(index, 1)[0];
+
+    assignCatToBattleSlot(game, handler, side, slot, cat);
+  });
+}
+
+export function assignCatToBattleSlot(game, handler, side, slot, cat) {
+  handler.slots[side][slot] = cat;
+}
+
+export function clearCatBattleSlots(game, handler, side) {
+  for (const index in handler.slots[side]) {
+    handler.slots[side][index] = null;
+  }
+}
+
+export function endGangBattle(game) {
+  game.gangBattleInProgess = false;
+}
+
+export function navigateGangBattleMenu(game, handler, direction) {
+  const nextIndex = handler.choice + (direction === 'up' ? -1 : 1);
+  const livingCats = game.getPlayer().party.contents.filter(c => c.living.health > 0);
+  const pageLength = 6;
+  const totalPages = Math.ceil(livingCats.length / pageLength);
+
+  if (nextIndex < 0) {
+    if (handler.page > 0) {
+      handler.page--;
+      handler.choice = pageLength - 1;
+    }
+  } else if (nextIndex >= pageLength) {
+    if (handler.page < totalPages - 1) {
+      handler.page++;
+      handler.choice = 0;
+    }
+  } else if (pageLength * handler.page + nextIndex < livingCats.length) {
+    handler.choice = nextIndex;
+  }
+}
+
+export function makeBattleMenuSelection(game, handler) {
+  if (handler.slots.friendly[2] !== null) {
+    return;
+  }
+
+  const index = (handler.page * 6) + handler.choice;
+  const cats = game.getPlayer().party.contents.filter(c => c.living.health > 0);
+  const cat = [...cats.sort(alphabetize)][index];
+
+  for (const slottedCat of handler.slots.friendly) {
+    if (slottedCat && cat.feline.id === slottedCat.feline.id) {
+      startConversation(game, [{
+        text: `You already assigned ${cat.encounterable.name} to the front line.`,
+      }]);
+
+      return;
+    }
+  }
+
+  for (const index in handler.slots.friendly) {
+    const slot = handler.slots.friendly[index];
+
+    if (slot === null) {
+      assignCatToBattleSlot(game, handler, 'friendly', index, cat);
+      break;
+    }
+  }
+
+  if (handler.slots.friendly[2] !== null) {
+    startConversation(game, [
+      {
+        text: 'Start battle with these three cats?',
+        choices: [
+          {
+            text: 'Yes',
+            fight: true,
+          },
+          {
+            text: 'No',
+            fight: false,
+          },
+        ],
+        onChoice: (state, choice) => {
+          if (choice.fight) {
+            // doCatBattle(game, handler);
+            advanceConversation(game, state);
+          } else {
+            clearCatBattleSlots(game, handler, 'friendly');
+            advanceConversation(game, state);
+          }
+        },
+      },
+    ]);
+  }
 }

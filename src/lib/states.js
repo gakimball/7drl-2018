@@ -1,4 +1,5 @@
-import { moveEntity, advanceConversation, navigateConversation, makeConversationSelection, useItem } from './actions';
+import { moveEntity, advanceConversation, navigateConversation, makeConversationSelection, useItem, navigateGangBattleMenu, makeBattleMenuSelection } from './actions';
+import { calculateDamage } from './utils';
 
 export const FieldState = game => event => {
   const player = game.getPlayer();
@@ -83,4 +84,54 @@ TextBoxState.controls = game => [
     key: 'Space',
     action: 'Continue',
   },
+];
+
+export const GangBattleState = (game, gang) => {
+  const handler = event => {
+    let handled = true;
+
+    switch (event.key) {
+      case ' ':
+        game.runAction(makeBattleMenuSelection, handler);
+        break;
+      case 'ArrowUp':
+        game.runAction(navigateGangBattleMenu, handler, 'up');
+        break;
+      case 'ArrowDown':
+        game.runAction(navigateGangBattleMenu, handler, 'down');
+        break;
+      default:
+        handled = false;
+    }
+
+    return handled;
+  };
+
+  handler.getGang = () => gang;
+  handler.slots = {
+    friendly: [null, null, null],
+    enemy: [null, null, null],
+  };
+  handler.choice = 0;
+  handler.page = 0;
+  handler.calculateDamage = () => calculateDamage(handler.slots.friendly, handler.slots.enemy);
+
+  return handler;
+};
+
+GangBattleState.controls = game => [
+  {
+    key: 'Arrows',
+    action: 'Select',
+  },
+  {
+    key: 'Space',
+    action: 'Assign',
+  },
+  ...(game.getActiveState().slots.friendly[0] !== null ? [
+    {
+      key: 'Esc',
+      action: 'Undo',
+    }
+  ] : []),
 ];

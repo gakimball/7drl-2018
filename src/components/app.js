@@ -10,6 +10,7 @@ import Map from './map';
 import Stats from './stats';
 import Textarea from './textarea';
 import Controls from './controls';
+import Field from './field';
 import './app.css';
 
 class App extends Component {
@@ -78,13 +79,19 @@ class App extends Component {
         <Container width={80} height={33}>
           <Player key="player" walking={playerWalking} />
           {encounter && <Encounter key="cat" image={encounter.image} />}
-          <Display
-            x={0}
-            y={0}
-            width={55}
-            height={20}
-            characters={['', ` ${encounter ? encounter.name : floor}`]}
-          />
+          <Field
+            encounter={encounter}
+            floor={floor}
+            gangs={this.game.getGangs()}
+          >{characters => (
+            <Display
+              x={0}
+              y={0}
+              width={55}
+              height={20}
+              characters={characters}
+            />
+          )}</Field>
           <Map
             player={player}
             entities={this.game.getDrawableEntities()}

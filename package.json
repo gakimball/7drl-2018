@@ -6,6 +6,7 @@
     "array-shuffle": "^1.0.1",
     "cat-names": "^1.0.2",
     "cli-boxes": "^1.0.0",
+    "dot-prop": "^4.2.0",
     "mobx": "^3.6.1",
     "mobx-react": "^4.4.2",
     "prop-types": "^15.6.1",

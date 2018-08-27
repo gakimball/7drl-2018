@@ -178,6 +178,15 @@ export const catClasses = {
   Tactician: 'Tactician',
 };
 
+export const catClassMaxHealth = {
+  [catClasses.Warrior]: 5,
+  [catClasses.Wizard]: 3,
+  [catClasses.Cleric]: 4,
+  [catClasses.Defender]: 4,
+  [catClasses.Illusionist]: 4,
+  [catClasses.Tactician]: 1,
+}
+
 export const angryCatSendoffs = {
   [catPersonalities.Dreary]: 'I\'m a fragile bird. Please go away. I\'ll tell you a secret: to win the heart of a dreary, oddball cat, you have to be an oddball yourself. Be weird.',
   [catPersonalities.Shy]: 'Why are you so mean?! Can\'t you be nicer? Making friends is hard enough as it is. Be kind to others.',
